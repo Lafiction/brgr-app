@@ -1,0 +1,22 @@
+header, .navButtons, .navButton {
+  display: flex;
+}
+
+header {
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  max-width: 1280px;
+  background: #1C1C21;
+  margin: 0 auto;
+}
+
+.logo {
+  position: absolute;
+  right: calc(50% - 145px);
+}
+
+.logo:hover, .navButton:hover {
+  cursor: pointer;
+  opacity: .5;
+}
