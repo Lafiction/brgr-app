@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   DragIcon,
   CurrencyIcon,
@@ -8,8 +9,11 @@ import {
 import clsx from 'clsx';
 import styles from './burger-constructor.module.css';
 import burgerPropTypes from '../../utils/types';
+import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details';
 
 const BurgerConstructor = (props) => {
+  const [showModal, setShowModal] = React.useState(false);
   const ids = ['60666c42cc7b410027a1a9b1', '60666c42cc7b410027a1a9b7','60666c42cc7b410027a1a9b4', '60666c42cc7b410027a1a9b9', '60666c42cc7b410027a1a9bc'];
   const ingredients = [];
   props.data.forEach(ingredient => {
@@ -19,11 +23,23 @@ const BurgerConstructor = (props) => {
       }
     })
   })
-
   const bun = ingredients.filter(ingredient => ingredient._id === '60666c42cc7b410027a1a9b1');
+
+  function handleOpenModal() {
+    setShowModal(true);
+  }
+  function handleCloseModal() {
+    setShowModal(false);
+  }
   
   return (
     <section className={clsx(styles.container, 'm-5')}>
+      {showModal &&
+        <Modal onClose={handleCloseModal}>
+          <OrderDetails />
+        </Modal>
+      }
+
       <div className={clsx(styles.ingridient, 'm-3 p-3')}>
         <img src={bun[0].image_mobile} />
         <span className={clsx(styles.name, 'text_type_main-default mr-3')}>{bun[0].name} (верх)</span>
@@ -68,7 +84,7 @@ const BurgerConstructor = (props) => {
       <div className={clsx(styles.result, 'mt-10')}>
         <span className='text_type_digits-medium pr-5'>4550</span>
         <CurrencyIcon/>
-        <Button size='large'>Оформить заказ</Button>
+        <Button size='large' onClick={handleOpenModal}>Оформить заказ</Button>
       </div>
     </section>
   );
