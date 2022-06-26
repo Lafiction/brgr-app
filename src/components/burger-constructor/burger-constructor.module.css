@@ -1,35 +1,27 @@
+.ingredients, .ingredient, .result {
+  display: flex; 
+}
+
 .container {
   width: 560px;
 }
 
-.ingridient {
-  display: flex;
-  align-items: center;
+.ingredients {
+  flex-direction: column; 
+  gap: 15px;
+}
+
+.ingredient {
   position: relative;
-  background: #1C1C21;
-  border-radius: 40px;
-}
-
-.ingridient:first-child {
-  border-radius: 88px 88px 40px 40px;
-}
-
-.ingridient:last-child {
-  border-radius: 40px 40px 88px 88px;
 }
 
 .dragIcon {
   position: absolute;
-  top: 40px;
-  left: -35px;
+  top: 30px;
+  left: -25px;
 }
 
-.name {
-  width: 230px;
-}
-
-.price, .result {
-  display: flex;
+.result {
   justify-content: flex-end;
   align-items: center;
 }

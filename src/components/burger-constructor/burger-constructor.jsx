@@ -2,12 +2,12 @@ import React from 'react';
 import {
   DragIcon,
   CurrencyIcon,
-  DeleteIcon,
-  LockIcon,
   Button,
+  ConstructorElement
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import clsx from 'clsx';
 import styles from './burger-constructor.module.css';
+import PropTypes from 'prop-types';
 import burgerPropTypes from '../../utils/types';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
@@ -33,52 +33,47 @@ const BurgerConstructor = (props) => {
   }
   
   return (
-    <section className={clsx(styles.container, 'm-5')}>
+    <section className={clsx(styles.container, 'ml-15')}>
       {showModal &&
         <Modal onClose={handleCloseModal}>
           <OrderDetails />
         </Modal>
       }
 
-      <div className={clsx(styles.ingridient, 'm-3 p-3')}>
-        <img src={bun[0].image_mobile} />
-        <span className={clsx(styles.name, 'text_type_main-default mr-3')}>{bun[0].name} (верх)</span>
-        <div className={clsx(styles.price, 'mr-5')}>
-          <span className='text text_type_digits-default mr-2'>{bun[0].price}</span>
-          <CurrencyIcon />
-        </div>
-        <LockIcon type='secondary' />
-      </div>
-      
-      <div>
+      <div className={clsx(styles.ingredients, 'mt-15')}>
+        <ConstructorElement
+          type='top'
+          text={`${bun[0].name} (верх)`}
+          price={bun[0].price}
+          thumbnail={bun[0].image_mobile}
+          isLocked={true}
+        />
+
         {ingredients.map(ingredient => {
           return (
-            <>
+            <div key={ingredient._id}>
               {ingredient.type !== 'bun' && (
-                <div className={clsx(styles.ingridient, 'm-3 p-3')}>
+                <div className={styles.ingredient}>
                   <div className={styles.dragIcon}>
                     <DragIcon />
                   </div>
-                  <img src={ingredient.image_mobile} />
-                  <span className={clsx(styles.name, 'text_type_main-default mr-3')}>{ingredient.name}</span>
-                  <div className={clsx(styles.price, 'mr-5')}>
-                    <span className='text_type_digits-default mr-2'>{ingredient.price}</span>
-                    <CurrencyIcon />
-                  </div>
-                  <DeleteIcon />
+                  <ConstructorElement
+                    thumbnail={ingredient.image_mobile}
+                    text={ingredient.name}
+                    price={ingredient.price}
+                  />
                 </div>
               )}
-            </>
-          )})}
-        <div className={clsx(styles.ingridient, 'm-3 p-3')}>
-          <img src={bun[0].image_mobile} />
-          <span className={clsx(styles.name, 'text_type_main-default mr-3')}>Кратерная булка N-200i (низ)</span>
-          <div className={clsx(styles.price, 'mr-5')}>
-            <span className='text_type_digits-default mr-2'>{bun[0].price}</span>
-            <CurrencyIcon />
-          </div>
-          <LockIcon type='secondary' />
-        </div>
+            </div>
+        )})}
+
+        <ConstructorElement
+          type='bottom'
+          text={`${bun[0].name} (низ)`}
+          price={bun[0].price}
+          thumbnail={bun[0].image_mobile}
+          isLocked={true}
+        />
       </div>
 
       <div className={clsx(styles.result, 'mt-10')}>
@@ -91,7 +86,7 @@ const BurgerConstructor = (props) => {
 }
 
 BurgerConstructor.propTypes = {
-  data: burgerPropTypes.isRequired,
+  data: PropTypes.arrayOf(burgerPropTypes).isRequired,
 };
 
 export default BurgerConstructor;

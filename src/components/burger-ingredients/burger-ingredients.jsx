@@ -5,6 +5,7 @@ import {
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
+import PropTypes from 'prop-types';
 import burgerPropTypes from '../../utils/types';
 import Modal from '../modal/modal'
 import IngredientDetails from '../ingredient-details/ingredient-details';
@@ -48,8 +49,8 @@ const BurgerIngredients = (props) => {
         <div className={styles.ingredients}>
           {Object.values(props.data.filter(ingredient => ingredient.type === 'bun')).map(ingredient => {
             return (
-              <div className={styles.ingredient} onClick={evt => {openModal(ingredient)}}>
-                <img src={ingredient.image} />
+              <div className={styles.ingredient} key={ingredient._id} onClick={evt => {openModal(ingredient)}}>
+                <img src={ingredient.image} alt={ingredient.name} />
                 <div className={styles.price}>
                   <span className='text_type_digits-default mr-2'>{ingredient.price}</span>
                   <CurrencyIcon />
@@ -63,8 +64,8 @@ const BurgerIngredients = (props) => {
         <div className={styles.ingredients}>
           {Object.values(props.data.filter(ingredient => ingredient.type === 'sauce')).map(ingredient => {
             return (
-              <div className={styles.ingredient} onClick={evt => {openModal(ingredient)}}>
-                <img src={ingredient.image} />
+              <div className={styles.ingredient} key={ingredient._id} onClick={evt => {openModal(ingredient)}}>
+                <img src={ingredient.image} alt={ingredient.name} />
                 <div className={styles.price}>
                   <span className='text_type_digits-default mr-2'>{ingredient.price}</span>
                   <CurrencyIcon />
@@ -78,8 +79,8 @@ const BurgerIngredients = (props) => {
         <div className={styles.ingredients}>
           {Object.values(props.data.filter(ingredient => ingredient.type === 'main')).map(ingredient => {
             return (
-              <div className={styles.ingredient} onClick={evt => {openModal(ingredient)}}>
-                <img src={ingredient.image} />
+              <div className={styles.ingredient} key={ingredient._id} onClick={evt => {openModal(ingredient)}}>
+                <img src={ingredient.image} alt={ingredient.name} />
                 <div className={styles.price}>
                   <span className='text_type_digits-default mr-2'>{ingredient.price}</span>
                   <CurrencyIcon />
@@ -95,7 +96,7 @@ const BurgerIngredients = (props) => {
 }
 
 BurgerIngredients.propTypes = {
-  data: burgerPropTypes.isRequired,
+  data: PropTypes.arrayOf(burgerPropTypes).isRequired,
 };
 
 export default BurgerIngredients;

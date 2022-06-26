@@ -1,11 +1,10 @@
 import styles from './ingredient-details.module.css';
-import PropTypes from 'prop-types';
 import burgerPropTypes from '../../utils/types';
 
 const IngredientDetails = ({ data }) => {
   return (
     <>
-      <img src={data.image_large} />
+      <img src={data.image_large} alt={data.name}/>
       <div className='text text_type_main-medium mb-10'>{data.name}</div>
       <div className={styles.details}>
         <div className={styles.detail}>
@@ -30,7 +29,7 @@ const IngredientDetails = ({ data }) => {
 }
 
 IngredientDetails.propTypes = {
-  data: PropTypes.arrayOf(burgerPropTypes).isRequired,
+  data: burgerPropTypes.isRequired,
 };
 
 export default IngredientDetails;
