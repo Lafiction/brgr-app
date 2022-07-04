@@ -1,0 +1,31 @@
+.container, .tabs, .ingredients, .ingredient, .price {
+  display: flex;
+}
+
+.container {
+  flex-direction: column;
+  width: 600px;
+}
+
+.ingredientsContainer {
+  height: 500px;
+  overflow-x: auto;
+}
+
+.ingredients {
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.ingredient {
+  flex-direction: column;
+  text-align: center;
+  width: 250px;
+  position: relative;
+  cursor: pointer;
+}
+
+.price {
+  align-items: center;
+  justify-content: center;
+}

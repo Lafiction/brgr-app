@@ -1,0 +1,11 @@
+.details, .detail {
+  display: flex;
+}
+
+.details {
+  justify-content: space-between;
+}
+  
+.detail {  
+  flex-direction: column;
+}

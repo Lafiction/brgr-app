@@ -1,0 +1,27 @@
+.ingredients, .ingredient, .result {
+  display: flex; 
+}
+
+.container {
+  width: 560px;
+}
+
+.ingredients {
+  flex-direction: column; 
+  gap: 15px;
+}
+
+.ingredient {
+  position: relative;
+}
+
+.dragIcon {
+  position: absolute;
+  top: 30px;
+  left: -25px;
+}
+
+.result {
+  justify-content: flex-end;
+  align-items: center;
+}
