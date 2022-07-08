@@ -1,99 +1,127 @@
 import React from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {
-  Tab,
-  Counter,
-  CurrencyIcon,
+  Tab
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import PropTypes from 'prop-types';
 import burgerPropTypes from '../../utils/types';
-import Modal from '../modal/modal'
+import Modal from '../modal/modal';
+import BurgerIngredient from '../burger-ingredient/burger-ingredient';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import {CLOSE_DETAILS, SHOW_DETAILS} from '../../services/actions/actions';
+import {getDetails} from '../../services/api';
 
-const BurgerIngredients = (props) => {
-  const ids = ['60666c42cc7b410027a1a9b1', '60666c42cc7b410027a1a9b7','60666c42cc7b410027a1a9b4', '60666c42cc7b410027a1a9b9', '60666c42cc7b410027a1a9bc']
+const BurgerIngredients = () => {
+  const dispatch = useDispatch();
+  const {allIngredients} = useSelector(state => state.allIngredients);
+  const details = useSelector((state) => state.ingredientDetails.details);
+  const showDetails = useSelector(state => state.ingredientDetails.showDetails);
+
+  const buns = allIngredients.filter(ingredient => ingredient.type === 'bun');
+  const sauces = allIngredients.filter(ingredient => ingredient.type === 'sauce');
+  const mains = allIngredients.filter(ingredient => ingredient.type === 'main');
+
   const [current, setCurrent] = React.useState('bun');
-  const [showModal, setShowModal] = React.useState(false);
-  const [details, setDetails] = React.useState(null);
 
   function openModal(ingredient) {
-    setDetails(ingredient);
-    setShowModal(true);
+    dispatch(getDetails(ingredient));
+    dispatch({type: SHOW_DETAILS});
   }
 
   function closeModal() {
-    setShowModal(false);
+    dispatch({type: CLOSE_DETAILS});
+  }
+
+  function scrollToBlock(ingredient) {
+    if (ingredient.target.scrollTop > 0 && ingredient.target.scrollTop < 290) {
+      setCurrent('bun');
+    } else if (ingredient.target.scrollTop > 290 && ingredient.target.scrollTop < 820) {
+      setCurrent('sauce');
+    } else if (ingredient.target.scrollTop > 820) {
+      setCurrent('main');
+    }
+  }
+  const tabBun = React.useRef(null);
+  const tabSauce = React.useRef(null);
+  const tabMain = React.useRef(null);
+
+  const scroll = (ingredient) => {
+    setCurrent(ingredient);
+    let ref = null;
+    switch (ingredient) {
+      case 'one':
+        ref = tabBun;
+        break;
+      case 'sauce':
+        ref = tabSauce;
+        break;
+      case 'main':
+        ref = tabMain;
+        break;
+      default:
+        break;
+    }
+    ref.current.scrollIntoView({block: 'start', behavior: 'smooth'});
   }
 
   return (
     <section className={styles.container}>
-      {showModal &&
+      { showDetails &&
         <Modal onClose={closeModal} header='Детали ингредиента'>
-          <IngredientDetails data={details} />
+          <IngredientDetails details={ details } />
         </Modal>
       }
-      <h1 className='text text_type_main-large mt-10 mb-5'>Соберите бургер</h1>
+      <h1 className='text_type_main-large pt-10 pb-5'>Соберите бургер</h1>
       <div className={styles.tabs}>
-        <Tab value='bun' active={current === 'bun'} onClick={setCurrent}>
+        <Tab value='bun' active={current === 'bun'} onClick={ingredient => scroll(ingredient)}>
           Булки
         </Tab>
-        <Tab value='sauce' active={current === 'sauce'} onClick={setCurrent}>
+        <Tab value='sauce' active={current === 'sauce'} onClick={ingredient => scroll(ingredient)}>
           Соусы
         </Tab>
-        <Tab value='main' active={current === 'main'} onClick={setCurrent}>
+        <Tab value='main' active={current === 'main'} onClick={ingredient => scroll(ingredient)}>
           Начинки
         </Tab>
       </div>
-      <div className={styles.ingredientsContainer}>
-        <h2 className='text_type_main-medium'>Булки</h2>
+
+      <div className={styles.ingredientsContainer} onScroll={scrollToBlock}>
+        <h2 className='text_type_main-medium' ref={tabBun}>Булки</h2>
         <div className={styles.ingredients}>
-          {Object.values(props.data.filter(ingredient => ingredient.type === 'bun')).map(ingredient => {
-            return (
-              <div className={styles.ingredient} key={ingredient._id} onClick={evt => {openModal(ingredient)}}>
-                <img src={ingredient.image} alt={ingredient.name} />
-                <div className={styles.price}>
-                  <span className='text_type_digits-default mr-2'>{ingredient.price}</span>
-                  <CurrencyIcon />
-                </div>
-                <span className={'text_type_main-default mt-2'}>{ingredient.name}</span>
-                {ids.includes(ingredient._id) && <Counter count={1} size='default' />}
-              </div>
-          )})}
+          {Object.values(buns).map(ingredient => 
+            <BurgerIngredient
+            ingredient={ingredient}
+              key={ingredient._id}
+              handleOpenModal={openModal}
+            />
+          )}
         </div>
-        <h2 className='text_type_main-medium'>Соусы</h2>
+
+        <h2 className='text_type_main-medium' ref={tabSauce}>Соусы</h2>
         <div className={styles.ingredients}>
-          {Object.values(props.data.filter(ingredient => ingredient.type === 'sauce')).map(ingredient => {
-            return (
-              <div className={styles.ingredient} key={ingredient._id} onClick={evt => {openModal(ingredient)}}>
-                <img src={ingredient.image} alt={ingredient.name} />
-                <div className={styles.price}>
-                  <span className='text_type_digits-default mr-2'>{ingredient.price}</span>
-                  <CurrencyIcon />
-                </div>
-                <span className={'text_type_main-default mt-2'}>{ingredient.name}</span>
-                {ids.includes(ingredient._id) && <Counter count={3} size='default' />}
-              </div>
-            )})}
+          {Object.values(sauces).map(ingredient =>
+            <BurgerIngredient
+            ingredient={ingredient}
+              key={ingredient._id}
+              handleOpenModal={openModal}
+            />
+          )}
         </div>
-        <h2 className='text_type_main-medium'>Начинки</h2>
+
+        <h2 className='text_type_main-medium' ref={tabMain}>Начинки</h2>
         <div className={styles.ingredients}>
-          {Object.values(props.data.filter(ingredient => ingredient.type === 'main')).map(ingredient => {
-            return (
-              <div className={styles.ingredient} key={ingredient._id} onClick={evt => {openModal(ingredient)}}>
-                <img src={ingredient.image} alt={ingredient.name} />
-                <div className={styles.price}>
-                  <span className='text_type_digits-default mr-2'>{ingredient.price}</span>
-                  <CurrencyIcon />
-                </div>
-                <span className={'text_type_main-default mt-2'}>{ingredient.name}</span>
-                {ids.includes(ingredient._id) && <Counter count={2} size='default' />}
-              </div>
-          )})}
+          {Object.values(mains).map(ingredient => 
+            <BurgerIngredient
+            ingredient={ingredient}
+              key={ingredient._id}
+              handleOpenModal={openModal}
+            />
+          )}
         </div>
       </div>
     </section>
   );
-}
+};
 
 BurgerIngredients.propTypes = {
   data: PropTypes.arrayOf(burgerPropTypes).isRequired,

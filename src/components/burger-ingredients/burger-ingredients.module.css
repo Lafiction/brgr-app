@@ -1,4 +1,4 @@
-.container, .tabs, .ingredients, .ingredient, .price {
+.container, .tabs, .ingredients {
   display: flex;
 }
 
@@ -15,17 +15,4 @@
 .ingredients {
   justify-content: space-between;
   flex-wrap: wrap;
-}
-
-.ingredient {
-  flex-direction: column;
-  text-align: center;
-  width: 250px;
-  position: relative;
-  cursor: pointer;
-}
-
-.price {
-  align-items: center;
-  justify-content: center;
 }
