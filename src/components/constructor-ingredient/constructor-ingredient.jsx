@@ -7,7 +7,7 @@ import {
   ConstructorElement,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './constructor-ingredient.module.css';
-import {DELETE_INGREDIENT} from '../../services/actions/actions';
+import {DELETE_INGREDIENT} from '../../services/actions/constants';
 import {ingredientPropTypes} from '../../utils/types';
 
 export default function ConstructorIngredient({item, index, moveIngredient}) {
@@ -65,7 +65,7 @@ export default function ConstructorIngredient({item, index, moveIngredient}) {
       <div className={styles.dragIcon}>
         <DragIcon/>
       </div>
-      <div>
+      <div className={styles.ingredient}>
         <ConstructorElement
           text={item.payload.name}
           price={item.payload.price}

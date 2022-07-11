@@ -1,7 +1,7 @@
 import {useCallback} from 'react';
 import {useDispatch} from 'react-redux';
 import {ingredientPropTypes} from '../../utils/types';
-import {REPLACE_INGREDIENT} from '../../services/actions/actions';
+import {REPLACE_INGREDIENT} from '../../services/actions/constants';
 import ConstructorIngredient from '../constructor-ingredient/constructor-ingredient';
 
 export default function ConstructorIngredients({ingredients}) {

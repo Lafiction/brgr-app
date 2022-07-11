@@ -4,13 +4,11 @@ import {
   Tab
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
-import PropTypes from 'prop-types';
-import burgerPropTypes from '../../utils/types';
 import Modal from '../modal/modal';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import {CLOSE_DETAILS, SHOW_DETAILS} from '../../services/actions/actions';
-import {getDetails} from '../../services/api';
+import {CLOSE_DETAILS, SHOW_DETAILS} from '../../services/actions/constants';
+import {getDetails} from '../../services/actions/get-details';
 
 const BurgerIngredients = () => {
   const dispatch = useDispatch();
@@ -121,10 +119,6 @@ const BurgerIngredients = () => {
       </div>
     </section>
   );
-};
-
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(burgerPropTypes).isRequired,
 };
 
 export default BurgerIngredients;

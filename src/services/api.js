@@ -3,12 +3,10 @@ import {
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_ERROR,
 
-  GET_DETAILS_REQUEST,
-
   GET_ORDER_REQUEST,
   GET_ORDER_SUCCESS,
   GET_ORDER_ERROR
-} from '../services/actions/actions';
+} from './actions/constants';
 
 export function getIngredients() {
   return function(dispatch) {
@@ -37,15 +35,6 @@ export function getIngredients() {
   };
 }
 
-export function getDetails(ingredient) {
-  return function(dispatch) {
-    dispatch({
-      type: GET_DETAILS_REQUEST,
-      details: ingredient
-    });
-  };
-}
-
 export function getOrderNumber(arr) {
   return function(dispatch) {
     dispatch({
@@ -56,7 +45,7 @@ export function getOrderNumber(arr) {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({'ingredients': arr})
+      body: JSON.stringify({ingredients: arr})
     })
     .then(response => {
       if (!response && !response.success) {

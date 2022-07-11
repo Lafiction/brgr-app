@@ -9,8 +9,6 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import clsx from 'clsx';
 import styles from './burger-constructor.module.css';
-import PropTypes from 'prop-types';
-import burgerPropTypes from '../../utils/types';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import {
@@ -19,7 +17,7 @@ import {
   SHOW_ORDER,
   CLOSE_ORDER,
   RESET_STATE
-} from '../../services/actions/actions';
+} from '../../services/actions/constants';
 import {getOrderNumber} from '../../services/api';
 import ConstructorIngredients from '../constructor-ingredients/constructor-ingredients';
 
@@ -71,7 +69,9 @@ const BurgerConstructor = () => {
   }, [bun, ingredients]);
 
   function handleOpenModal() {
-    dispatch(getOrderNumber(ingredients.map(ingredient => ingredient._id)));
+    const orderedBuns = [bun._id, bun._id];
+    const orderedIngredients = ingredients.map((ingredient) => ingredient._id);  
+    dispatch(getOrderNumber(orderedBuns.concat(orderedIngredients)));
     dispatch({type: SHOW_ORDER});
   }
 
@@ -128,15 +128,13 @@ const BurgerConstructor = () => {
 
       <div className={clsx(styles.result, 'mt-10')}>
         <span className='text_type_digits-medium'>{totalPrice}</span>
-        <CurrencyIcon/>
+        <div className='ml-1 mr-7'>
+          <CurrencyIcon/>
+        </div>
         <Button size='large' disabled={!bun} onClick={handleOpenModal}>Оформить заказ</Button>
       </div>
     </section>
   );
-};
-
-BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(burgerPropTypes).isRequired,
 };
 
 export default BurgerConstructor;
