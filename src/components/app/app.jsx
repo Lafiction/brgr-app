@@ -6,12 +6,12 @@ import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Loader from '../loader/loader';
-import {getIngredients} from '../../services/api';
+import {getIngredients} from '../../services/actions/get-ingredients';
 import styles from './app.module.css';
 
 function App() {
   const dispatch = useDispatch();
-
+  
   useEffect(()=> {
     dispatch(getIngredients());
   }, [dispatch]);

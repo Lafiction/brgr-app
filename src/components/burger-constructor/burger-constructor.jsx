@@ -18,7 +18,7 @@ import {
   CLOSE_ORDER,
   RESET_STATE
 } from '../../services/actions/constants';
-import {getOrderNumber} from '../../services/api';
+import {getOrderNumber} from '../../services/actions/get-order-number';
 import ConstructorIngredients from '../constructor-ingredients/constructor-ingredients';
 
 const BurgerConstructor = () => {
