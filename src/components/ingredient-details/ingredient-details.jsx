@@ -29,7 +29,7 @@ const IngredientDetails = ({details}) => {
 }
 
 IngredientDetails.propTypes = {
-  data: burgerPropTypes.isRequired,
+  details: burgerPropTypes.isRequired,
 };
 
 export default IngredientDetails;
