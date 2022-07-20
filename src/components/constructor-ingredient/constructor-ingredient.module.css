@@ -1,0 +1,13 @@
+.elementContainer {
+  position: relative;
+}
+
+.dragIcon {
+  position: absolute;
+  top: 25px;
+  left: -35px;
+}
+
+.ingredient {
+  display: flex;
+}

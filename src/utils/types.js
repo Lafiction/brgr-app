@@ -15,3 +15,11 @@ const burgerPropTypes = PropTypes.shape({
 });
 
 export default burgerPropTypes;
+
+export const ingredientPropTypes = PropTypes.shape({
+  _id: PropTypes.string.isRequired,
+  dragId: PropTypes.string.isRequired,
+  payload: burgerPropTypes.isRequired
+});
+
+export const ingredientsPropTypes = PropTypes.arrayOf(ingredientPropTypes);
