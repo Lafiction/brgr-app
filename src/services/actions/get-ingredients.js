@@ -3,7 +3,7 @@ import {
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_ERROR
 } from './constants';
-import {ingredientsApi} from '../api';
+import { ingredientsApi } from '../api';
 
 export const getIngredients = () => (dispatch) => {
   dispatch({

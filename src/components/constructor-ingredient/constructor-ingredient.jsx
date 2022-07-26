@@ -1,14 +1,14 @@
-import {useRef} from 'react';
-import {useDispatch} from 'react-redux';
-import {useDrag, useDrop} from 'react-dnd';
+import { useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { useDrag, useDrop } from 'react-dnd';
 import PropTypes from 'prop-types';
 import {
   DragIcon,
   ConstructorElement,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './constructor-ingredient.module.css';
-import {DELETE_INGREDIENT} from '../../services/actions/constants';
-import {ingredientPropTypes} from '../../utils/types';
+import { DELETE_INGREDIENT } from '../../services/actions/constants';
+import ingredientPropTypes from '../../utils/types';
 
 export default function ConstructorIngredient({item, index, moveIngredient}) {
   const dispatch = useDispatch();
@@ -78,7 +78,6 @@ export default function ConstructorIngredient({item, index, moveIngredient}) {
 }
 
 ConstructorIngredient.propTypes = {
-  item: ingredientPropTypes.isRequired,
   index: PropTypes.number.isRequired,
   moveIngredient: PropTypes.func.isRequired
 };

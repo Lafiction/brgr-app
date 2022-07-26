@@ -3,7 +3,7 @@ import {
   GET_ORDER_SUCCESS,
   GET_ORDER_ERROR
 } from './constants';
-import {orderBurgerApi} from '../api';
+import { orderBurgerApi } from '../api';
 
 export const getOrderNumber = (orderData) => (dispatch) => {
   dispatch({

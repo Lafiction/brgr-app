@@ -1,7 +1,6 @@
-import {useCallback} from 'react';
-import {useDispatch} from 'react-redux';
-import {ingredientsPropTypes} from '../../utils/types';
-import {REPLACE_INGREDIENT} from '../../services/actions/constants';
+import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { REPLACE_INGREDIENT } from '../../services/actions/constants';
 import ConstructorIngredient from '../constructor-ingredient/constructor-ingredient';
 
 export default function ConstructorIngredients({ingredients}) {
@@ -24,7 +23,3 @@ export default function ConstructorIngredients({ingredients}) {
     ))
   );
 }
-
-ConstructorIngredients.propTypes = {
-  ingredients: ingredientsPropTypes.isRequired
-};
