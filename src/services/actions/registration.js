@@ -6,11 +6,26 @@ import {
 } from './constants';
 import { checkResponse, BURGER_API } from '../api';
   
+function getRegistrationRequest() {
+  return {
+    type: GET_REGISTRATION_REQUEST
+  }
+}
+function getRegistrationSuccess(data) {
+  return {
+    type: GET_REGISTRATION_SUCCESS,
+    form: data.user,
+  }
+}
+function getRegistrationFaled() {
+  return {
+    type: GET_REGISTRATION_FAILED
+  }
+}
+
 export function registration(form) {
   return function (dispatch) {
-    dispatch({
-      type: GET_REGISTRATION_REQUEST,
-    });
+    dispatch(getRegistrationRequest);
     fetch(`${BURGER_API}/auth/register`, {
       method: 'POST',
       headers: {
@@ -18,20 +33,15 @@ export function registration(form) {
       },
       body: JSON.stringify(form),
     })
-      .then(checkResponse)
-      .then((data) => {
-        setCookie('accessToken', data.accessToken);
-        setCookie('refreshToken', data.refreshToken);
-        dispatch({
-          type: GET_REGISTRATION_SUCCESS,
-          form: data.user,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-        dispatch({
-          type: GET_REGISTRATION_FAILED,
-        });
-      });
+    .then(checkResponse)
+    .then((data) => {
+      setCookie('accessToken', data.accessToken);
+      setCookie('refreshToken', data.refreshToken);
+      dispatch(getRegistrationSuccess(data));
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch(getRegistrationFaled);
+    });
   };
 }

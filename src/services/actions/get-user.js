@@ -7,22 +7,37 @@ import {
 } from './constants';
 import { getUserRequest, updateToken } from '../api';
 
+function userRequest() {
+  return {
+    type: GET_USER_REQUEST
+  }
+}
+function userSuccess(response) {
+  return {
+    type: GET_USER_SUCCESS,
+    form: response.user
+  }
+}
+function userFaled() {
+  return {
+    type: GET_USER_FAILED
+  }
+}
+function updateUserSuccess(response) {
+  return {
+    type: UPDATE_USER_SUCCESS,
+    form: response.user
+  }
+}
+
 export const getUser = () => {
   return async function (dispatch) {
-    dispatch({
-      type: GET_USER_REQUEST,
-    });
+    dispatch(userRequest);
     try {
       const response = await getUserRequest();
       if (response && response.success) {
-        dispatch({
-          type: GET_USER_SUCCESS,
-          form: response.user,
-        });
-        dispatch({
-          type: UPDATE_USER_SUCCESS,
-          form: response.user,
-        });
+        dispatch(userSuccess(response));
+        dispatch(updateUserSuccess(response));
       }
     } catch (error) {
       try {
@@ -38,26 +53,16 @@ export const getUser = () => {
           }
           const response = await getUserRequest();
           if (response.success) {
-            dispatch({
-              type: GET_USER_SUCCESS,
-              form: response.user,
-            });
-            dispatch({
-              type: UPDATE_USER_SUCCESS,
-              form: response.user,
-            });
+            dispatch(userSuccess(response));
+            dispatch(updateUserSuccess(response));
           }
         } else {
-          dispatch({
-            type: GET_USER_FAILED,
-          });
+          dispatch(userFaled);
           return Promise.reject(error);
         }
       } catch (error) {
         console.log(error);
-        dispatch({
-          type: GET_USER_FAILED,
-        });
+        dispatch(userFaled);
       }
     }
   };

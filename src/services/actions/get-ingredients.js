@@ -5,21 +5,31 @@ import {
 } from './constants';
 import { ingredientsApi } from '../api';
 
-export const getIngredients = () => (dispatch) => {
-  dispatch({
+function getIngredientsRequest() {
+  return {
     type: GET_INGREDIENTS_REQUEST
-  });
+  }
+}
+function getIngredientsSuccess(data) {
+  return {
+    type: GET_INGREDIENTS_SUCCESS,
+    allIngredients: data.data
+  }
+}
+function getIngredientsError() {
+  return {
+    type: GET_INGREDIENTS_ERROR
+  }
+}
+
+export const getIngredients = () => (dispatch) => {
+  dispatch(getIngredientsRequest);
   return ingredientsApi()
   .then(data => {
-    dispatch({
-      type: GET_INGREDIENTS_SUCCESS,
-      allIngredients: data.data
-    });
+    dispatch(getIngredientsSuccess(data));
   })
   .catch(error => {
-    dispatch({
-      type: GET_INGREDIENTS_ERROR
-    });
+    dispatch(getIngredientsError);
     console.log(error);
   });
 };

@@ -5,12 +5,26 @@ import {
 } from './constants';
 import { checkResponse, BURGER_API } from '../api';
   
+function forgotPasswordRequest() {
+  return {
+    type: FORGOT_PASSWORD_REQUEST
+  }
+}
+function forgotPasswordSuccess(data) {
+  return {
+    type: FORGOT_PASSWORD_SUCCESS,
+    form: data.user
+  }
+}
+function forgotPasswordFaled() {
+  return {
+    type: FORGOT_PASSWORD_FAILED
+  }
+}
+
 export function forgotPassword(form) {
   return function (dispatch) {
-    dispatch({
-      type: FORGOT_PASSWORD_REQUEST,
-    });
-
+    dispatch(forgotPasswordRequest);
     fetch(`${BURGER_API}/password-reset`, {
       method: "POST",
       headers: {
@@ -20,18 +34,13 @@ export function forgotPassword(form) {
         email: form.email,
       }),
     })
-      .then(checkResponse)
-      .then((data) => {
-        dispatch({
-          type: FORGOT_PASSWORD_SUCCESS,
-          form: data.user,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-        dispatch({
-          type: FORGOT_PASSWORD_FAILED,
-        });
-      });
+    .then(checkResponse)
+    .then(() => {
+      dispatch(forgotPasswordSuccess);
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch(forgotPasswordFaled);
+    });
   };
 }

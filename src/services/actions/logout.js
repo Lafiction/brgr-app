@@ -5,13 +5,26 @@ import {
   GET_LOGOUT_FAILED
 } from './constants';
 import { checkResponse, BURGER_API } from '../api';
-  
+
+function getLogoutRequest() {
+  return {
+    type: GET_LOGOUT_REQUEST
+  }
+}
+function getLogoutSuccess() {
+  return {
+    type: GET_LOGOUT_SUCCESS
+  }
+}
+function getLogoutFaled() {
+  return {
+    type: GET_LOGOUT_FAILED
+  }
+}
+
 export function logout() {
   return function (dispatch) {
-    dispatch({
-      type: GET_LOGOUT_REQUEST,
-    });
-
+    dispatch(getLogoutRequest);
     fetch(`${BURGER_API}/auth/logout`, {
       method: "POST",
       body: JSON.stringify({
@@ -25,15 +38,11 @@ export function logout() {
       .then(() => {
         deleteCookie('accessToken');
         deleteCookie('refreshToken');
-        dispatch({
-          type: GET_LOGOUT_SUCCESS,
-        });
+        dispatch(getLogoutSuccess);
       })
       .catch((err) => {
         console.log(err);
-        dispatch({
-          type: GET_LOGOUT_FAILED,
-        });
+        dispatch(getLogoutFaled);
       });
   };
 }

@@ -7,18 +7,36 @@ import {
 } from './constants';
 import { updateToken, getUpdateUserRequest } from '../api';  
 
+function updateUserRequest() {
+  return {
+    type: UPDATE_USER_REQUEST
+  }
+}
+function updateUserSuccess(response) {
+  return {
+    type: UPDATE_USER_SUCCESS,
+    form: response.user
+  }
+}
+function updateUserFaled() {
+  return {
+    type: UPDATE_USER_FAILED
+  }
+}
+
+function getUserSuccess() {
+  return {
+    type: GET_USER_SUCCESS
+  }
+}
+
 export function updateUser(form) {
   return async function (dispatch) {
-    dispatch({
-      type: UPDATE_USER_REQUEST,
-    });
+    dispatch(updateUserRequest);
     try {
       const response = await getUpdateUserRequest(form);
       if (response && response.success) {
-        dispatch({
-          type: UPDATE_USER_SUCCESS,
-          form: response.user,
-        });
+        dispatch(updateUserSuccess(response));
       }
     } catch (error) {
       console.log(error);
@@ -33,28 +51,18 @@ export function updateUser(form) {
             setCookie('accessToken', data.accessToken);
             setCookie('refreshToken', data.refreshToken);
           }
-
           const response = await getUpdateUserRequest(form);
           if (response && response.success) {
-            dispatch({
-              type: UPDATE_USER_SUCCESS,
-              form: response.user,
-            });
-            dispatch({
-              type: GET_USER_SUCCESS,
-            });
+            dispatch(updateUserSuccess(response));
+            dispatch(getUserSuccess);
           }
         } else {
-          dispatch({
-            type: UPDATE_USER_FAILED,
-          });
+          dispatch(updateUserFaled);
           return Promise.reject(error);
         }
       } catch (error) {
         console.log(error);
-        dispatch({
-          type: UPDATE_USER_FAILED,
-        });
+        dispatch(updateUserFaled);
       }
     }
   };

@@ -7,11 +7,26 @@ import {
 import { getUser } from './get-user';
 import { checkResponse, BURGER_API } from '../api';
 
+function getAuthRequest() {
+  return {
+    type: GET_AUTH_REQUEST
+  }
+}
+function getAuthSuccess(data) {
+  return {
+    type: GET_AUTH_SUCCESS,
+    form: data.user,
+  }
+}
+function getAuthFaled() {
+  return {
+    type: GET_AUTH_FAILED
+  }
+}
+
 export function login(form) {
   return function (dispatch) {
-    dispatch({
-      type: GET_AUTH_REQUEST,
-    });
+    dispatch(getAuthRequest);
     fetch(`${BURGER_API}/auth/login`, {
       method: 'POST',
       headers: {
@@ -25,16 +40,11 @@ export function login(form) {
       setCookie('accessToken', data.accessToken);
       setCookie('refreshToken', data.refreshToken);
       dispatch(getUser());
-      dispatch({
-        type: GET_AUTH_SUCCESS,
-        form: data.user,
-      });
+      dispatch(getAuthSuccess(data));
     })
     .catch((err) => {
       console.log(err);
-      dispatch({
-        type: GET_AUTH_FAILED,
-      });
+      dispatch(getAuthFaled);
     });
   };
 }

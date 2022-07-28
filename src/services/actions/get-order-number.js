@@ -5,21 +5,31 @@ import {
 } from './constants';
 import { orderBurgerApi } from '../api';
 
-export const getOrderNumber = (orderData) => (dispatch) => {
-  dispatch({
+function getOrderRequest() {
+  return {
     type: GET_ORDER_REQUEST
-  });
+  }
+}
+function getOrderSuccess(res) {
+  return {
+    type: GET_ORDER_SUCCESS,
+    order: res
+  }
+}
+function getOrderError() {
+  return {
+    type: GET_ORDER_ERROR
+  }
+}
+
+export const getOrderNumber = (orderData) => (dispatch) => {
+  dispatch(getOrderRequest);
   return orderBurgerApi(orderData)
   .then(res => {
-    dispatch({
-      type: GET_ORDER_SUCCESS,
-      order: res
-    });
+    dispatch(getOrderSuccess(res));
   })
   .catch(err => {
-    dispatch({
-      type: GET_ORDER_ERROR
-    });
+    dispatch(getOrderError);
     console.log(err);
   });
 };

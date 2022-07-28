@@ -4,12 +4,27 @@ import {
   RESET_PASSWORD_FAILED
 } from './constants';
 import { checkResponse, BURGER_API } from '../api';
-  
+
+function resetPasswordRequest() {
+  return {
+    type: RESET_PASSWORD_REQUEST
+  }
+}
+function resetPasswordSuccess(data) {
+  return {
+    type: RESET_PASSWORD_SUCCESS,
+    form: data.user,
+  }
+}
+function resetPasswordFaled() {
+  return {
+    type: RESET_PASSWORD_FAILED
+  }
+}
+
 export function resetPassword(form) {
   return async function (dispatch) {
-    dispatch({
-      type: RESET_PASSWORD_REQUEST,
-    });
+    dispatch(resetPasswordRequest);
     await fetch(`${BURGER_API}/auth/password-reset/reset`, {
       method: 'POST',
       body: JSON.stringify(form),
@@ -19,16 +34,11 @@ export function resetPassword(form) {
     })
       .then(checkResponse)
       .then((data) => {
-        dispatch({
-          type: RESET_PASSWORD_SUCCESS,
-          form: data.user,
-        });
+        dispatch(resetPasswordSuccess);
       })
       .catch((err) => {
         console.log(err);
-        dispatch({
-          type: RESET_PASSWORD_FAILED,
-        });
+        dispatch(resetPasswordFaled);
       });
   };
 }
