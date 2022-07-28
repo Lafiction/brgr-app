@@ -3,7 +3,7 @@ import {
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_FAILED,
 } from './constants';
-import { checkResponse } from '../api';
+import { checkResponse, BURGER_API } from '../api';
   
 export function forgotPassword(form) {
   return function (dispatch) {
@@ -11,7 +11,7 @@ export function forgotPassword(form) {
       type: FORGOT_PASSWORD_REQUEST,
     });
 
-    fetch('https://norma.nomoreparties.space/api/password-reset', {
+    fetch(`${BURGER_API}/password-reset`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useLocation, Redirect } from 'react-router-dom';
 import {
   Input,
   PasswordInput,
@@ -11,7 +11,7 @@ import styles from './login.module.css';
 
 export function LoginPage() {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const location = useLocation();
   const isUser = useSelector(store => store.user.isUser);
   const form = useSelector(store => store.login.form);
 
@@ -25,11 +25,11 @@ export function LoginPage() {
   function submitForm(evt) {
     evt.preventDefault();
     dispatch(login(form));
-    history.push('/');
   }
-  
+ 
   if (isUser) {
-    return history.push('/');
+    const {from} = location.state || {from: {pathname: '/'}};
+    return <Redirect to={from} />;
   }
 
   return (

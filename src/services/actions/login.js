@@ -5,14 +5,14 @@ import {
   GET_AUTH_FAILED
 } from './constants';
 import { getUser } from './get-user';
-import { checkResponse } from '../api';
+import { checkResponse, BURGER_API } from '../api';
 
 export function login(form) {
   return function (dispatch) {
     dispatch({
       type: GET_AUTH_REQUEST,
     });
-    fetch('https://norma.nomoreparties.space/api/auth/login', {
+    fetch(`${BURGER_API}/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

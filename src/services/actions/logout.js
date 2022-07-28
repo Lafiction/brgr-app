@@ -4,7 +4,7 @@ import {
   GET_LOGOUT_SUCCESS,
   GET_LOGOUT_FAILED
 } from './constants';
-import { checkResponse } from '../api';
+import { checkResponse, BURGER_API } from '../api';
   
 export function logout() {
   return function (dispatch) {
@@ -12,7 +12,7 @@ export function logout() {
       type: GET_LOGOUT_REQUEST,
     });
 
-    fetch('https://norma.nomoreparties.space/api/auth/logout', {
+    fetch(`${BURGER_API}/auth/logout`, {
       method: "POST",
       body: JSON.stringify({
         token: getCookie('refreshToken'),

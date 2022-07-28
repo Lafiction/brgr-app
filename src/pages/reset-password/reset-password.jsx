@@ -1,5 +1,6 @@
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import {
   Input,
   PasswordInput,
@@ -20,6 +21,13 @@ export function ResetPasswordPage() {
     history.push('/');
   }
 
+  const recoveryEmail = useSelector(store => store.forgotPassword.form.email);
+  
+  if (recoveryEmail.length === 0) {
+    history.goBack();
+  }
+
+  
   function fillField(evt) {
     dispatch({
       type: SET_PASSWORD,

@@ -19,9 +19,9 @@ import {
 function App() {
   const dispatch = useDispatch();
   const history = useHistory();
-  let location = useLocation();
-  const action = history.action === 'push' || history.action === 'replace';
-  let main = action && location.state && location.state.main;
+  const location = useLocation();
+  const action = history.action === 'PUSH' || history.action === 'REPLACE';
+  const main = action && location.state && location.state.main;
   
   useEffect(()=> {
     dispatch(getIngredients());
@@ -34,15 +34,6 @@ function App() {
   return (
     <>
       <AppHeader />
-      { isUser ? 
-          <div>
-            {'user '}
-          </div> 
-        : 
-          <div>
-            {'не user '}
-          </div> 
-      }
       <Switch location={main || location}>
         <Route path='/login' exact={true}>
           <LoginPage />

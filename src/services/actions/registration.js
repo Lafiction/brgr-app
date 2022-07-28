@@ -4,14 +4,14 @@ import {
   GET_REGISTRATION_SUCCESS,
   GET_REGISTRATION_FAILED
 } from './constants';
-import { checkResponse } from '../api';
+import { checkResponse, BURGER_API } from '../api';
   
 export function registration(form) {
   return function (dispatch) {
     dispatch({
       type: GET_REGISTRATION_REQUEST,
     });
-    fetch('https://norma.nomoreparties.space/api/auth/register', {
+    fetch(`${BURGER_API}/auth/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -54,7 +54,7 @@ const BurgerIngredients = () => {
     setCurrent(ingredient);
     let ref = null;
     switch (ingredient) {
-      case 'one':
+      case 'bun':
         ref = tabBun;
         break;
       case 'sauce':

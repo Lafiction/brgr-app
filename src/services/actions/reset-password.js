@@ -3,14 +3,14 @@ import {
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAILED
 } from './constants';
-import { checkResponse } from '../api';
+import { checkResponse, BURGER_API } from '../api';
   
 export function resetPassword(form) {
   return async function (dispatch) {
     dispatch({
       type: RESET_PASSWORD_REQUEST,
     });
-    await fetch('https://norma.nomoreparties.space/api/password-reset/reset', {
+    await fetch(`${BURGER_API}/auth/password-reset/reset`, {
       method: 'POST',
       body: JSON.stringify(form),
       headers: {

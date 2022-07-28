@@ -4,7 +4,7 @@ export const checkResponse = (response) => {
   return response.ok ? response.json() : response.json().then((error) => Promise.reject(error));
 };
 
-const BURGER_API = 'https://norma.nomoreparties.space/api';
+export const BURGER_API = 'https://norma.nomoreparties.space/api';
 
 export function orderBurgerApi(arr) {
   const response = fetch(`${BURGER_API}/orders`, {
