@@ -24,7 +24,7 @@ function getLogoutFaled() {
 
 export function logout() {
   return function (dispatch) {
-    dispatch(getLogoutRequest);
+    dispatch(getLogoutRequest());
     fetch(`${BURGER_API}/auth/logout`, {
       method: "POST",
       body: JSON.stringify({
@@ -38,11 +38,11 @@ export function logout() {
       .then(() => {
         deleteCookie('accessToken');
         deleteCookie('refreshToken');
-        dispatch(getLogoutSuccess);
+        dispatch(getLogoutSuccess());
       })
       .catch((err) => {
         console.log(err);
-        dispatch(getLogoutFaled);
+        dispatch(getLogoutFaled());
       });
   };
 }

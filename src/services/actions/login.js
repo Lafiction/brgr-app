@@ -26,7 +26,7 @@ function getAuthFaled() {
 
 export function login(form) {
   return function (dispatch) {
-    dispatch(getAuthRequest);
+    dispatch(getAuthRequest());
     fetch(`${BURGER_API}/auth/login`, {
       method: 'POST',
       headers: {
@@ -44,7 +44,7 @@ export function login(form) {
     })
     .catch((err) => {
       console.log(err);
-      dispatch(getAuthFaled);
+      dispatch(getAuthFaled());
     });
   };
 }

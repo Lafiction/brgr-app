@@ -25,7 +25,7 @@ function getRegistrationFaled() {
 
 export function registration(form) {
   return function (dispatch) {
-    dispatch(getRegistrationRequest);
+    dispatch(getRegistrationRequest());
     fetch(`${BURGER_API}/auth/register`, {
       method: 'POST',
       headers: {
@@ -41,7 +41,7 @@ export function registration(form) {
     })
     .catch((err) => {
       console.log(err);
-      dispatch(getRegistrationFaled);
+      dispatch(getRegistrationFaled());
     });
   };
 }

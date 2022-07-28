@@ -32,7 +32,7 @@ function updateUserSuccess(response) {
 
 export const getUser = () => {
   return async function (dispatch) {
-    dispatch(userRequest);
+    dispatch(userRequest());
     try {
       const response = await getUserRequest();
       if (response && response.success) {
@@ -57,12 +57,12 @@ export const getUser = () => {
             dispatch(updateUserSuccess(response));
           }
         } else {
-          dispatch(userFaled);
+          dispatch(userFaled());
           return Promise.reject(error);
         }
       } catch (error) {
         console.log(error);
-        dispatch(userFaled);
+        dispatch(userFaled());
       }
     }
   };

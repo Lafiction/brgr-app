@@ -23,13 +23,13 @@ function getOrderError() {
 }
 
 export const getOrderNumber = (orderData) => (dispatch) => {
-  dispatch(getOrderRequest);
+  dispatch(getOrderRequest());
   return orderBurgerApi(orderData)
   .then(res => {
     dispatch(getOrderSuccess(res));
   })
   .catch(err => {
-    dispatch(getOrderError);
+    dispatch(getOrderError());
     console.log(err);
   });
 };

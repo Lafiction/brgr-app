@@ -29,7 +29,7 @@ export const getIngredients = () => (dispatch) => {
     dispatch(getIngredientsSuccess(data));
   })
   .catch(error => {
-    dispatch(getIngredientsError);
+    dispatch(getIngredientsError());
     console.log(error);
   });
 };

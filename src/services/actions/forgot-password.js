@@ -24,7 +24,7 @@ function forgotPasswordFaled() {
 
 export function forgotPassword(form) {
   return function (dispatch) {
-    dispatch(forgotPasswordRequest);
+    dispatch(forgotPasswordRequest());
     fetch(`${BURGER_API}/password-reset`, {
       method: "POST",
       headers: {
@@ -35,12 +35,12 @@ export function forgotPassword(form) {
       }),
     })
     .then(checkResponse)
-    .then(() => {
-      dispatch(forgotPasswordSuccess);
+    .then(data => {
+      dispatch(forgotPasswordSuccess(data));
     })
     .catch((err) => {
       console.log(err);
-      dispatch(forgotPasswordFaled);
+      dispatch(forgotPasswordFaled());
     });
   };
 }
