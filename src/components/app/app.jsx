@@ -1,39 +1,67 @@
-import {useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {DndProvider} from 'react-dnd';
-import {HTML5Backend} from 'react-dnd-html5-backend';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
+import { ProtectedRoute } from '../protected-route/protected-route';
 import AppHeader from '../app-header/app-header';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import Loader from '../loader/loader';
-import {getIngredients} from '../../services/actions/get-ingredients';
-import styles from './app.module.css';
+import { getIngredients } from '../../services/actions/get-ingredients';
+import { getUser } from '../../services/actions/get-user';
+import {
+  LoginPage,
+  MainPage,
+  RegistrationPage,
+  ForgotPasswordPage,
+  ResetPasswordPage,
+  ProfilePage,
+  NotFoundPage,
+  IngredientPage,
+} from '../../pages';
 
 function App() {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
+  const action = history.action === 'PUSH' || history.action === 'REPLACE';
+  const main = action && location.state && location.state.main;
   
   useEffect(()=> {
     dispatch(getIngredients());
+    dispatch(getUser());
   }, [dispatch]);
 
-  const {allIngredients} = useSelector(state => state.allIngredients)
+  const isUser = useSelector(store => store.user.isUser);
+  const { allIngredients } = useSelector(state => state.allIngredients);
 
   return (
     <>
       <AppHeader />
-      <main className={'mb-15'}>
-        {allIngredients ? (
-          <DndProvider backend={HTML5Backend}>
-            <BurgerIngredients />
-            <BurgerConstructor />
-          </DndProvider>
-        ) : (
-          <div className='m-30'>
-            <p className='text text_color_inactive text_type_main-medium mb-20'>Загружаем ингредиенты</p>
-            <Loader />
-          </div>
-        )}
-      </main>
+      <Switch location={main || location}>
+        <Route path='/login' exact={true}>
+          <LoginPage />
+        </Route>
+        
+        <ProtectedRoute path='/profile' exact={true}>
+          <ProfilePage />
+        </ProtectedRoute>
+
+        <Route path='/registration' exact={true}>
+          <RegistrationPage />
+        </Route>
+        <Route path='/forgot-password' exact={true}>
+          <ForgotPasswordPage />
+        </Route>
+        <Route path='/reset-password' exact={true}>
+          <ResetPasswordPage />
+        </Route>
+        <Route path='/' exact={true}>
+          <MainPage allIngredients={allIngredients} />
+        </Route>
+        <Route path='/ingredients/:id' exact={true}>
+          <IngredientPage />
+        </Route>
+        <Route>
+          <NotFoundPage />
+        </Route>
+      </Switch>
     </>
   );
 }

@@ -20,3 +20,8 @@ header {
   cursor: pointer;
   opacity: .5;
 }
+
+.navButton {
+  color: white;
+  text-decoration: none;
+}

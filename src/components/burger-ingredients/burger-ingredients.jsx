@@ -1,5 +1,6 @@
 import React from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import {
   Tab
 } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -7,11 +8,14 @@ import styles from './burger-ingredients.module.css';
 import Modal from '../modal/modal';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import {CLOSE_DETAILS, SHOW_DETAILS} from '../../services/actions/constants';
-import {getDetails} from '../../services/actions/get-details';
+import { CLOSE_DETAILS, SHOW_DETAILS } from '../../services/actions/constants';
+import { getDetails } from '../../services/actions/get-details';
 
 const BurgerIngredients = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const history = useHistory();
+
   const {allIngredients} = useSelector(state => state.allIngredients);
   const details = useSelector((state) => state.ingredientDetails.details);
   const showDetails = useSelector(state => state.ingredientDetails.showDetails);
@@ -29,6 +33,7 @@ const BurgerIngredients = () => {
 
   function closeModal() {
     dispatch({type: CLOSE_DETAILS});
+    history.goBack();
   }
 
   function scrollToBlock(ingredient) {
@@ -44,11 +49,12 @@ const BurgerIngredients = () => {
   const tabSauce = React.useRef(null);
   const tabMain = React.useRef(null);
 
+
   const scroll = (ingredient) => {
     setCurrent(ingredient);
     let ref = null;
     switch (ingredient) {
-      case 'one':
+      case 'bun':
         ref = tabBun;
         break;
       case 'sauce':
@@ -86,34 +92,58 @@ const BurgerIngredients = () => {
       <div className={styles.ingredientsContainer} onScroll={scrollToBlock}>
         <h2 className='text_type_main-medium' ref={tabBun}>Булки</h2>
         <div className={styles.ingredients}>
-          {Object.values(buns).map(ingredient => 
-            <BurgerIngredient
-            ingredient={ingredient}
+          {Object.values(buns).map(ingredient =>
+            <Link
               key={ingredient._id}
-              handleOpenModal={openModal}
-            />
+              to={{
+                pathname: `ingredients/${ingredient._id}`,
+                state: {main: location},
+              }}
+              className={styles.description}
+            >
+              <BurgerIngredient
+                ingredient={ingredient}
+                handleOpenModal={openModal}
+              />
+            </Link>
           )}
         </div>
 
         <h2 className='text_type_main-medium' ref={tabSauce}>Соусы</h2>
         <div className={styles.ingredients}>
           {Object.values(sauces).map(ingredient =>
-            <BurgerIngredient
-            ingredient={ingredient}
+            <Link
               key={ingredient._id}
-              handleOpenModal={openModal}
-            />
+              to={{
+                pathname: `ingredients/${ingredient._id}`,
+                state: {main: location},
+              }}
+              className={styles.description}
+            >
+              <BurgerIngredient
+                ingredient={ingredient}
+                handleOpenModal={openModal}
+              />
+            </Link>
           )}
         </div>
 
         <h2 className='text_type_main-medium' ref={tabMain}>Начинки</h2>
         <div className={styles.ingredients}>
           {Object.values(mains).map(ingredient => 
-            <BurgerIngredient
-            ingredient={ingredient}
+            <Link
               key={ingredient._id}
-              handleOpenModal={openModal}
-            />
+              to={{
+                pathname: `ingredients/${ingredient._id}`,
+                state: {main: location},
+              }}
+              className={styles.description}
+            >
+              <BurgerIngredient
+                ingredient={ingredient}
+                handleOpenModal={openModal}
+              />
+            </Link>
           )}
         </div>
       </div>

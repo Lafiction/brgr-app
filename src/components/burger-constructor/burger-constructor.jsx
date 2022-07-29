@@ -1,7 +1,7 @@
-import {useMemo} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {useDrop} from 'react-dnd';
-import {v1 as uuid} from 'uuid';
+import { useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useDrop } from 'react-dnd';
+import { v1 as uuid } from 'uuid';
 import {
   CurrencyIcon,
   Button,
@@ -18,11 +18,16 @@ import {
   CLOSE_ORDER,
   RESET_STATE
 } from '../../services/actions/constants';
-import {getOrderNumber} from '../../services/actions/get-order-number';
+import { getOrderNumber } from '../../services/actions/get-order-number';
 import ConstructorIngredients from '../constructor-ingredients/constructor-ingredients';
+import { useHistory } from 'react-router-dom';
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  const isUser = useSelector((store) => store.user.isUser);
+
   const {bun, ingredients} = useSelector(state => state.burgerConstructor);
   const showModal = useSelector(state => state.orderDetails.showOrderModal);
   const order = useSelector(state => state.orderDetails.order);
@@ -69,11 +74,15 @@ const BurgerConstructor = () => {
   }, [bun, ingredients]);
 
   function handleOpenModal() {
-    const orderedBuns = [bun._id, bun._id];
-    const orderedIngredients = ingredients.map((ingredient) => ingredient._id);  
-    dispatch(getOrderNumber(orderedBuns.concat(orderedIngredients)));
-    dispatch({type: SHOW_ORDER});
-  }
+    if (isUser) {
+      const orderedBuns = [bun._id, bun._id];
+      const orderedIngredients = ingredients.map((ingredient) => ingredient._id);
+      dispatch(getOrderNumber(orderedBuns.concat(orderedIngredients)));
+      dispatch({ type: SHOW_ORDER });
+    } else {
+      history.push('/login');
+    }
+  }  
 
   function handleCloseModal() {
     dispatch({type: CLOSE_ORDER});

@@ -1,5 +1,5 @@
-import {useSelector} from 'react-redux';
-import {useDrag} from 'react-dnd';
+import { useSelector } from 'react-redux';
+import { useDrag } from 'react-dnd';
 import clsx from 'clsx';
 import {
     Counter,
