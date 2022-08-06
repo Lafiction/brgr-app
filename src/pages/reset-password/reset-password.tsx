@@ -1,22 +1,16 @@
 import { Link, useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-//import { Redirect } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import {
-  Input,
-  PasswordInput,
-  Button,
+  Input
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './reset-password.module.css';
 import { SET_PASSWORD } from '../../services/actions/constants';
 import { resetPassword } from '../../services/actions/reset-password';
-
 import { TRootState } from '../../services/reducers/root-reducer';
 import { useAppDispatch } from '../../services/hooks';
 import { ButtonFixed } from '../../services/fix-ui-components';
 
-
-export function ResetPasswordPage() {
-  //const dispatch = useDispatch();
+export const ResetPasswordPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const form = useSelector((store: TRootState) => store.resetPassword.form);

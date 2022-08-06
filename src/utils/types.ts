@@ -46,3 +46,9 @@ export type TModal = {
   onClose: () => void;
   children?: any;
 };
+
+export type TUpdateUser = {
+  name: string;
+  email: string;
+  password: string;
+};

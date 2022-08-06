@@ -4,7 +4,7 @@ import styles from './ingredient.module.css';
 import { TIngredient } from '../../utils/types';
 import { useAppSelector } from '../../services/hooks';
 
-export function IngredientPage() {
+export const IngredientPage: React.FC = () => {
   const history = useHistory();
   const ingredients = useAppSelector(state => state.allIngredients);
   const id = history.location.pathname.replace('/ingredients/', '');

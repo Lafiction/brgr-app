@@ -1,31 +1,34 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
 import {
-  Input,
-  Button,
+  Input
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { getUser } from '../../services/actions/get-user';
 import { RECOVERY_PASSWORD } from '../../services/actions/constants';
 import { forgotPassword } from '../../services/actions/forgot-password';
 import styles from './forgot-password.module.css';
+import { useAppDispatch } from '../../services/hooks';
+import { TRootState } from '../../services/reducers/root-reducer';
+import { ButtonFixed } from '../../services/fix-ui-components';
 
-export function ForgotPasswordPage() {
-  const dispatch = useDispatch();
+
+export const ForgotPasswordPage: React.FC = () => {
+  const dispatch = useAppDispatch();
   const history = useHistory();
-  const isUser = useSelector(store => store.user.isUser);
-  const form = useSelector(store => store.forgotPassword.form);
+  const isUser = useSelector((store: TRootState) => store.user.isUser);
+  const form = useSelector((store: TRootState) => store.forgotPass.form);
   if (isUser) {
     history.push('/');
   }
 
-  function fillField(evt) {
+  function fillField(evt: React.ChangeEvent<HTMLInputElement>) {
     dispatch({
       type: RECOVERY_PASSWORD,
       payload: { ...form, [evt.target.name]: evt.target.value },
     });
   }
 
-  function submitForm(evt) {
+  function submitForm(evt: React.FormEvent<HTMLFormElement>) {
     evt.preventDefault();
     dispatch(forgotPassword(form));
     dispatch(getUser());
@@ -52,9 +55,9 @@ export function ForgotPasswordPage() {
           />
         </div>
         <div className='mb-20'>
-          <Button size='medium'>
+          <ButtonFixed size='medium'>
             Восстановить
-          </Button>
+          </ButtonFixed>
         </div>
         <p className='text_type_main-default text_color_inactive mb-5'>
           Вспомнили пароль?
