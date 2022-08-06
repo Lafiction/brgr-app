@@ -5,12 +5,14 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import clsx from 'clsx';
 import styles from './modal.module.css';
-import PropTypes from 'prop-types';
 import ModalOverlay from '../modal-overlay/modal-overlay';
+import { TModal } from '../../utils/types';
 
-const Modal = ({ header, children, onClose }) => {
+const Modal: React.FC<TModal> = (props) => {
+  const { children, header, onClose } = props;
+
   React.useEffect(() => {
-    const closeModal = (evt) => {
+    const closeModal = (evt: KeyboardEvent) => {
       if (evt.key === 'Escape') {
         onClose();
       }
@@ -34,15 +36,9 @@ const Modal = ({ header, children, onClose }) => {
         </div>
         <ModalOverlay onClose={onClose} />
       </>,
-      document.getElementById('modal')
+      document.getElementById('modal') as HTMLDivElement
     )
   );
 }
-
-Modal.propTypes = {
-	header: PropTypes.string,
-  children: PropTypes.node.isRequired,
-  onClose: PropTypes.func.isRequired,
-};
 
 export default Modal;

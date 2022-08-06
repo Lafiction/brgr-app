@@ -1,6 +1,6 @@
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+//import { Redirect } from 'react-router-dom';
 import {
   Input,
   PasswordInput,
@@ -10,32 +10,37 @@ import styles from './reset-password.module.css';
 import { SET_PASSWORD } from '../../services/actions/constants';
 import { resetPassword } from '../../services/actions/reset-password';
 
+import { TRootState } from '../../services/reducers/root-reducer';
+import { useAppDispatch } from '../../services/hooks';
+import { ButtonFixed } from '../../services/fix-ui-components';
+
+
 export function ResetPasswordPage() {
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const history = useHistory();
-  const form = useSelector((store) => store.resetPassword.form);
-  const isPasswordReseted = useSelector((store) => store.resetPassword.isPasswordReseted);
-  const isUser = useSelector((store) => store.user.isUser);
+  const form = useSelector((store: TRootState) => store.resetPassword.form);
+  const isPasswordReseted = useSelector((store: TRootState) => store.resetPassword.isPasswordReseted);
+  const isUser = useSelector((store: TRootState) => store.user.isUser);
 
   if (isUser) {
     history.push('/');
   }
 
-  const recoveryEmail = useSelector(store => store.forgotPassword.form.email);
+  const recoveryEmail = useSelector((store: TRootState) => store.forgotPassword.form.email);
   
   if (recoveryEmail.length === 0) {
     history.goBack();
   }
-
   
-  function fillField(evt) {
+  function fillField(evt: React.ChangeEvent<HTMLInputElement>) {
     dispatch({
       type: SET_PASSWORD,
       payload: { ...form, [evt.target.name]: evt.target.value },
     });
   }
 
-  async function submitForm(evt) {
+  async function submitForm(evt: React.FormEvent<HTMLFormElement>) {
     evt.preventDefault();
     dispatch(resetPassword(form));
     if (isPasswordReseted) {
@@ -57,7 +62,7 @@ export function ResetPasswordPage() {
           Восстановление пароля
         </h1>
         <div className='mb-5'>
-          <PasswordInput
+          <Input
             type='password'
             placeholder='Введите новый пароль'
             name='password'
@@ -75,9 +80,12 @@ export function ResetPasswordPage() {
           />
         </div>
         <div className='mb-20'>
-          <Button type='primary' size='medium'>
+          <ButtonFixed 
+            type='primary' 
+            size='medium'
+          >
             Восстановить
-          </Button>
+          </ButtonFixed>
         </div>
         <p className='text_type_main-default text_color_inactive mb-5'>
           Вспомнили пароль?

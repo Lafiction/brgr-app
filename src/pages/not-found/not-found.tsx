@@ -1,6 +1,6 @@
 import styles from './not-found.module.css';
 
-export function NotFoundPage() {
+export const NotFoundPage = () => {
   return (
     <div className={styles.container}>
       <p className='text_type_main-large'>404</p>

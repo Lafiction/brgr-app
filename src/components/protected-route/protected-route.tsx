@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Route, Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { Route, Redirect, RouteProps } from 'react-router-dom';
 import { getCookie } from '../../utils/cookie';
 import { getUser } from '../../services/actions/get-user';
 
-export function ProtectedRoute({ children, ...rest }) {
-  const isUser = useSelector((store) => store.user.isUser);
+import { TRootState } from '../../services/reducers/root-reducer';
+
+export const ProtectedRoute: React.FC<RouteProps> = ({ children, ...rest }) => {
+  const isUser = useSelector((store: TRootState) => store.user.isUser);
   const isToken = getCookie('accessToken');
   const [isUserLoaded, setUserLoaded] = useState(false);
 
@@ -39,10 +40,5 @@ export function ProtectedRoute({ children, ...rest }) {
     );
   }
   
-  return <Route {...rest} render={({ location }) => children} />;
+  return <Route {...rest} render={({ location }) => children as any} />;
 }
-
-ProtectedRoute.propTypes = {
-  children: PropTypes.element.isRequired,
-  rest: PropTypes.object,
-};

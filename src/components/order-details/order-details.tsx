@@ -2,8 +2,13 @@ import clsx from 'clsx';
 import styles from './order-details.module.css';
 import done from '../../images/done.png'
 import Loader from '../loader/loader';
+import { TOrderNumber } from '../../utils/types';
 
-const OrderDetails = ({order}) => {
+type TOrderProps = {
+  order: TOrderNumber;
+};
+
+const OrderDetails: React.FC<TOrderProps> = ({ order }) => {
   return (
     <div className={styles.order}>
       {order && (

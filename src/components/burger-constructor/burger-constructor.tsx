@@ -1,10 +1,9 @@
 import { useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useDrop } from 'react-dnd';
+import { useSelector } from 'react-redux';
+import { useDrop, DropTargetMonitor } from 'react-dnd';
 import { v1 as uuid } from 'uuid';
 import {
   CurrencyIcon,
-  Button,
   ConstructorElement
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import clsx from 'clsx';
@@ -22,28 +21,31 @@ import { getOrderNumber } from '../../services/actions/get-order-number';
 import ConstructorIngredients from '../constructor-ingredients/constructor-ingredients';
 import { useHistory } from 'react-router-dom';
 
-const BurgerConstructor = () => {
-  const dispatch = useDispatch();
+import { TRootState } from '../../services/reducers/root-reducer';
+import { TIngredient } from '../../utils/types';
+import { useAppDispatch } from '../../services/hooks';
+import { ButtonFixed } from '../../services/fix-ui-components';
+
+const BurgerConstructor: React.FC = () => {
+  const dispatch = useAppDispatch();
   const history = useHistory();
-
-  const isUser = useSelector((store) => store.user.isUser);
-
-  const {bun, ingredients} = useSelector(state => state.burgerConstructor);
-  const showModal = useSelector(state => state.orderDetails.showOrderModal);
-  const order = useSelector(state => state.orderDetails.order);
-  const storeIngredients = useSelector(state => state.allIngredients.allIngredients);
+  const isUser = useSelector((state: TRootState) => state.user.isUser);
+  const { bun, ingredients } = useSelector((state: TRootState) => state.burgerConstructor);
+  const showModal = useSelector((state: TRootState) => state.orderDetails.showOrderModal);
+  const order = useSelector((state: TRootState) => state.orderDetails.order);
+  const storeIngredients = useSelector((state: TRootState) => state.allIngredients.allIngredients);
 
   const [{currentBun}, drop] = useDrop({
     accept: 'bun',
-    collect: monitor => ({
+    collect: (monitor: DropTargetMonitor) => ({
       currentBun: monitor.isOver()
     }),
-    drop(item) {
+    drop(item: { _id: string }) {
       dispatch({
         type: ADD_BUN,
         item: {
           ...item,
-          payload: storeIngredients.find(ingredient => ingredient._id === item._id),
+          payload: storeIngredients.find((ingredient: any) => ingredient._id === item._id),
           dragId: uuid()
         }
       });
@@ -52,15 +54,15 @@ const BurgerConstructor = () => {
 
   const [{ currentIngredient }, dropTargerRef] = useDrop({
     accept: ['sauce', 'main'],
-    collect: monitor => ({
+    collect: (monitor: DropTargetMonitor) => ({
       currentIngredient: monitor.isOver()
     }),
-    drop(item) {
+    drop(item: { _id: string }) {
       dispatch({
         type: ADD_INGREDIENT,
         item: {
           ...item,
-          payload: storeIngredients.find(ingredient => ingredient._id === item._id),
+          payload: storeIngredients.find((ingredient: TIngredient) => ingredient._id === item._id),
           dragId: uuid()
         }
       });
@@ -69,14 +71,14 @@ const BurgerConstructor = () => {
 
   const totalPrice = useMemo(() => {
     let bunPrice = bun ? bun.payload.price * 2 : 0;
-    let ingredientsPrice = ingredients.length > 0 ? ingredients.reduce((cur, acc) => acc.payload.price + cur, 0) : 0;
+    let ingredientsPrice = ingredients.length > 0 ? ingredients.reduce((cur: number, acc: any) => acc.payload.price + cur, 0) : 0;
     return ingredientsPrice + bunPrice;
   }, [bun, ingredients]);
 
   function handleOpenModal() {
     if (isUser) {
       const orderedBuns = [bun._id, bun._id];
-      const orderedIngredients = ingredients.map((ingredient) => ingredient._id);
+      const orderedIngredients = ingredients.map((ingredient: TIngredient) => ingredient._id);
       dispatch(getOrderNumber(orderedBuns.concat(orderedIngredients)));
       dispatch({ type: SHOW_ORDER });
     } else {
@@ -138,9 +140,16 @@ const BurgerConstructor = () => {
       <div className={clsx(styles.result, 'mt-10')}>
         <span className='text_type_digits-medium'>{totalPrice}</span>
         <div className='ml-1 mr-7'>
-          <CurrencyIcon/>
+          <CurrencyIcon type='primary' />
         </div>
-        <Button size='large' disabled={!bun} onClick={handleOpenModal}>Оформить заказ</Button>
+        <ButtonFixed 
+          type='primary' 
+          size='large' 
+          disabled={!bun} 
+          onClick={handleOpenModal}
+        >
+          Оформить заказ
+        </ButtonFixed>
       </div>
     </section>
   );
