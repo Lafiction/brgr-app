@@ -1,16 +1,38 @@
 import { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
-import PropTypes from 'prop-types';
 import {
   DragIcon,
   ConstructorElement,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './constructor-ingredient.module.css';
 import { DELETE_INGREDIENT } from '../../services/actions/constants';
-import ingredientPropTypes from '../../utils/types';
+import { TIngredient } from '../../utils/types';
 
-export default function ConstructorIngredient({item, index, moveIngredient}) {
+type TIngredientPropTypes = {
+  _id: string;
+  dragId: string;
+  payload: TIngredient;
+};
+
+type TOrderedIngredient = {
+  item: TIngredientPropTypes;
+  index: number;
+  moveIngredient: (item: number, index: number) => void;
+}
+
+type TClientOffset = {
+  x: number;
+  y: number;
+};
+
+const ConstructorIngredient: React.FC<TOrderedIngredient> = ({
+  item,
+  index,
+  moveIngredient,
+}) => {
+  const ref = useRef<HTMLDivElement>(null);
+
   const dispatch = useDispatch();
   const [{handlerId}, drop] = useDrop({
     accept: 'item',
@@ -19,15 +41,18 @@ export default function ConstructorIngredient({item, index, moveIngredient}) {
         handlerId: monitor.getHandlerId()
       };
     },
-    hover(item, monitor) {
+    hover(item: any, monitor) {
       if (!ref.current) {
         return;
       }
       if (item.index === index) {
         return;
       }
+
       const hoverMiddleY = (ref.current?.getBoundingClientRect().bottom - ref.current?.getBoundingClientRect().top) / 2;
-      const hoverClientY = monitor.getClientOffset().y - ref.current?.getBoundingClientRect().top;
+      const clientOffset = monitor.getClientOffset() as TClientOffset;
+      const hoverClientY = clientOffset.y - ref.current?.getBoundingClientRect().top;
+
       if ((item.index < index && hoverClientY < hoverMiddleY) || (item.index > index && hoverClientY > hoverMiddleY)) {
         return;
       }
@@ -53,31 +78,28 @@ export default function ConstructorIngredient({item, index, moveIngredient}) {
     });
   };
 
-  const ref = useRef(null);
+  //drag(drop(ref));
 
   return (
     <div className={styles.elementContainer}
       key={item.payload._id}
-      ref={drag(drop(ref))}
+      ref={ref}
       onDrop={(evt) => evt.preventDefault()}
       data-handler-id={handlerId}
     >
       <div className={styles.dragIcon}>
-        <DragIcon/>
+        <DragIcon type='primary'/>
       </div>
       <div className={styles.ingredient}>
         <ConstructorElement
           text={item.payload.name}
           price={item.payload.price}
           thumbnail={item.payload.image_mobile}
-          handleClose={evt => deleteItem(evt.target)}
+          handleClose={() => deleteItem()}
         />
       </div>
     </div>
   );
 }
 
-ConstructorIngredient.propTypes = {
-  index: PropTypes.number.isRequired,
-  moveIngredient: PropTypes.func.isRequired
-};
+export default ConstructorIngredient;

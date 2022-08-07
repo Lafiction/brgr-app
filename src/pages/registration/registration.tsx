@@ -1,32 +1,34 @@
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import {
-  Input,
-  PasswordInput,
-  Button,
+  Input
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { SET_REGISTRATION } from '../../services/actions/constants';
 import { registration } from '../../services/actions/registration';
 import styles from './registration.module.css';
+import { TRootState } from '../../services/reducers/root-reducer';
+import { useAppDispatch } from '../../services/hooks';
+import { ButtonFixed } from '../../services/fix-ui-components';
 
-export function RegistrationPage() {
-  const dispatch = useDispatch();
+export const RegistrationPage = () => {
+  const dispatch = useAppDispatch();
   const history = useHistory();
-  const form = useSelector((store) => store.registration.form);
-  const isUser = useSelector((store) => store.user.isUser);
+  const form = useSelector((store: TRootState) => store.registration.form);
+  const isUser = useSelector((store: TRootState) => store.user.isUser);
 
   if (isUser) {
     history.push('/');
   }
 
-  function fillField(e) {
+  function fillField(evt: React.ChangeEvent<HTMLInputElement>) {
     dispatch({
       type: SET_REGISTRATION,
-      payload: { ...form, [e.target.name]: e.target.value },
+      payload: { ...form, [evt.target.name]: evt.target.value },
     });
   }
 
-  function submitForm(evt) {
+  function submitForm(evt: React.FormEvent<HTMLFormElement>) {
     evt.preventDefault();
     dispatch(registration(form));
     history.push('/login');
@@ -59,7 +61,7 @@ export function RegistrationPage() {
           />
         </div>
         <div className='mb-6'>
-          <PasswordInput
+          <Input
             type='password'
             placeholder='Пароль'
             name='password'
@@ -68,9 +70,12 @@ export function RegistrationPage() {
           />
         </div>
         <div className='mb-20'>
-          <Button type='primary' size='medium'>
+          <ButtonFixed
+            type='primary' 
+            size='medium'
+          >
             Зарегистрироваться
-          </Button>
+          </ButtonFixed>
         </div>
         <p className='text text_type_main-default text_color_inactive mb-4'>
           Уже зарегистрированы?

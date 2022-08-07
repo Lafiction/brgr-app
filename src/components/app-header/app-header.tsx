@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import {
   Logo,
   BurgerIcon,
@@ -8,7 +7,7 @@ import {
 import { NavLink } from 'react-router-dom';
 import style from './app-header.module.css';
 
-const AppHeader = () => {
+const AppHeader: React.FC = () => {
   return (
     <header className={'pt-10 pb-10 pl-5 pr-5'}>
       <nav className={style.navButtons}>
@@ -16,14 +15,14 @@ const AppHeader = () => {
           to='/'
           className={style.navButton}
         >
-          <BurgerIcon className='m-2' />
+          <BurgerIcon type='primary' />
           <span className='text_type_main-default pl-2 pr-10'>Конструктор</span>
         </NavLink>
         <NavLink
           to='/'
           className={style.navButton}
         >
-          <ListIcon type='secondary' className='m-2' />
+          <ListIcon type='secondary' />
           <span className='text_type_main-default text_color_inactive pl-2'>Лента заказов</span>
         </NavLink>
       </nav>

@@ -1,28 +1,28 @@
-import { useSelector, useDispatch } from 'react-redux';
 import { Link, useLocation, Redirect } from 'react-router-dom';
 import {
-  Input,
-  PasswordInput,
-  Button,
+  Input
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { SET_AUTH } from '../../services/actions/constants';
 import { login } from '../../services/actions/login';
 import styles from './login.module.css';
+import { useAppDispatch, useAppSelector } from '../../services/hooks';
+import { TRootState } from '../../services/reducers/root-reducer';
+import { ButtonFixed } from '../../services/fix-ui-components';
 
-export function LoginPage() {
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const isUser = useSelector(store => store.user.isUser);
-  const form = useSelector(store => store.login.form);
+export const LoginPage = () => {
+  const dispatch = useAppDispatch();
+  const location = useLocation<{ from: string }>();
+  const isUser = useAppSelector((store: TRootState) => store.user.isUser);
+  const form = useAppSelector((store: TRootState) => store.login.form);
 
-  function fillField(evt) {
+  function fillField(evt: React.ChangeEvent<HTMLInputElement>) {
     dispatch({
       type: SET_AUTH,
       payload: { ...form, [evt.target.name]: evt.target.value },
     });
   }
 
-  function submitForm(evt) {
+  function submitForm(evt: React.FormEvent<HTMLFormElement>) {
     evt.preventDefault();
     dispatch(login(form));
   }
@@ -45,7 +45,7 @@ export function LoginPage() {
         />
       </div>
       <div className='mb-5'>
-        <PasswordInput
+        <Input
           type='password'
           placeholder='Пароль'
           name='password'
@@ -54,7 +54,9 @@ export function LoginPage() {
         />
       </div>
       <div className='mb-20'>
-        <Button type='primary' size='medium'>Войти</Button>
+        <ButtonFixed type='primary' size='medium'>
+          Войти
+        </ButtonFixed>
       </div>
       <p className='text_type_main-default text_color_inactive mb-4'>
         Вы — новый пользователь?

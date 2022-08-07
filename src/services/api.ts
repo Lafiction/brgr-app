@@ -1,12 +1,13 @@
-import { getCookie } from './../utils/cookie';
+import { getCookie } from '../utils/cookie';
+import { TUpdateUser } from '../utils/types';
 
-export const checkResponse = (response) => {
+export const checkResponse = (response: Response) => {
   return response.ok ? response.json() : response.json().then((error) => Promise.reject(error));
 };
 
 export const BURGER_API = 'https://norma.nomoreparties.space/api';
 
-export function orderBurgerApi(arr) {
+export function orderBurgerApi(arr: string[]) {
   const response = fetch(`${BURGER_API}/orders`, {
     method: 'POST',
     headers: {
@@ -14,23 +15,13 @@ export function orderBurgerApi(arr) {
     },
     body: JSON.stringify({ingredients: arr})
   })
-  .then(response => {
-    if (!response && !response.success) {
-      throw new Error('Something went wrong');
-    }
-    return response.json();
-  })
+  .then(checkResponse)
   return response;
 }
 
 export function ingredientsApi() {
   const response = fetch(`${BURGER_API}/ingredients`)
-  .then(response => {
-    if (!response && !response.success) {
-      throw new Error('Something went wrong');
-    }
-    return response.json();
-  })
+  .then(checkResponse)
   return response;
 }
 
@@ -39,13 +30,13 @@ export const getUserRequest = async () => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: getCookie('accessToken'),
+      Authorization: getCookie('accessToken')!,
     },
   });
   return checkResponse(response);
 };
   
-export const updateToken = async (token) => {
+export const updateToken = async (token : string | undefined) => {
   return await fetch(`${BURGER_API}/auth/token`, {
     method: 'POST',
     headers: {
@@ -57,13 +48,13 @@ export const updateToken = async (token) => {
   }).then(checkResponse);
 };
 
-export const getUpdateUserRequest = async (form) => {
+export const getUpdateUserRequest = async (form: TUpdateUser) => {
   const res = await fetch(`${BURGER_API}/auth/user`, {
     method: 'PATCH',
     body: JSON.stringify(form),
     headers: {
       'Content-Type': 'application/json',
-      Authorization: getCookie('accessToken'),
+      Authorization: getCookie('accessToken')!,
     },
   });
   return checkResponse(res);

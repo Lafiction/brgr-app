@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import AppHeader from '../app-header/app-header';
@@ -15,12 +14,14 @@ import {
   NotFoundPage,
   IngredientPage,
 } from '../../pages';
+import { TLocation } from '../../utils/types';
+import { useAppDispatch, useAppSelector } from '../../services/hooks';
 
-function App() {
-  const dispatch = useDispatch();
+const App: React.FC = () => {
+  const dispatch = useAppDispatch();
   const history = useHistory();
-  const location = useLocation();
-  const action = history.action === 'PUSH' || history.action === 'REPLACE';
+  const location = useLocation<TLocation>();
+  const action: boolean = history.action === 'PUSH' || history.action === 'REPLACE';
   const main = action && location.state && location.state.main;
   
   useEffect(()=> {
@@ -28,8 +29,7 @@ function App() {
     dispatch(getUser());
   }, [dispatch]);
 
-  const isUser = useSelector(store => store.user.isUser);
-  const { allIngredients } = useSelector(state => state.allIngredients);
+  const { allIngredients } = useAppSelector(state => state.allIngredients);
 
   return (
     <>

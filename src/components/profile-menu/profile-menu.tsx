@@ -4,11 +4,14 @@ import { Link, useHistory } from 'react-router-dom';
 import { getUser } from '../../services/actions/get-user';
 import { logout } from '../../services/actions/logout';
 import styles from './profile-menu.module.css';
+import { TRootState } from '../../services/reducers/root-reducer';
+import { TProfileMenu } from '../../utils/types';
+import { useAppDispatch } from '../../services/hooks';
 
-export function ProfileMenu() {
-  const dispatch = useDispatch();
+export const ProfileMenu: React.FC<TProfileMenu> = ({ activeLink }) => {
+  const dispatch = useAppDispatch();
   const history = useHistory();
-  const isUser = useSelector((store) => store.user.isUser);
+  const isUser = useSelector((store: TRootState) => store.user.isUser);
 
   useEffect(() => {
     dispatch(getUser());
