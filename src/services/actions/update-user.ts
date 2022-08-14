@@ -3,16 +3,43 @@ import {
   GET_USER_SUCCESS,
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
-  UPDATE_USER_FAILED
+  UPDATE_USER_FAILED,
+  SET_USER
 } from './constants';
-import { updateToken, getUpdateUserRequest } from '../api';  
+import { updateToken, getUpdateUserRequest } from '../api';
+import { AppDispatch, AppThunk } from '../../services/hooks';
+import type { TRegistrationForm } from '../../utils/types';
+
+interface IUpdateUserRequest {
+  readonly type: typeof UPDATE_USER_REQUEST;
+}
+
+interface IUpdateUserSuccess {
+  readonly type: typeof UPDATE_USER_SUCCESS;
+  form: TRegistrationForm;
+}
+
+interface IUpdateUserFailed {
+  readonly type: typeof UPDATE_USER_FAILED;
+}
+
+interface ISetUser {
+  readonly type: typeof SET_USER;
+  payload: TRegistrationForm;
+}
+
+export type TUpdateUserActions =
+  | ISetUser
+  | IUpdateUserRequest
+  | IUpdateUserSuccess
+  | IUpdateUserFailed;
 
 function updateUserRequest() {
   return {
     type: UPDATE_USER_REQUEST
   }
 }
-function updateUserSuccess(response) {
+function updateUserSuccess(response: any) {
   return {
     type: UPDATE_USER_SUCCESS,
     form: response.user
@@ -30,15 +57,15 @@ function getUserSuccess() {
   }
 }
 
-export function updateUser(form) {
-  return async function (dispatch) {
+export const updateUser: AppThunk = (form) => {
+  return async function (dispatch: AppDispatch) {
     dispatch(updateUserRequest());
     try {
       const response = await getUpdateUserRequest(form);
       if (response && response.success) {
         dispatch(updateUserSuccess(response));
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
       try {
         if (

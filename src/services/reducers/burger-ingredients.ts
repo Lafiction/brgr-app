@@ -3,14 +3,25 @@ import {
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_ERROR
 } from '../actions/constants';
+import type { TIngredientsActions } from '../actions/get-ingredients';
+import { TIngredient } from '../../utils/types';
 
-export const initialState = {
-  ingredientsRequest: false,
-  ingredientsError: false,
-  allIngredients: null, 
+type TIngredientsState = {
+  ingredientsRequest: boolean;
+  ingredientsError: boolean;
+  allIngredients: Array<TIngredient>;
 };
 
-export const burgerIngredientsReducer = (state = initialState, action) => {
+export const initialState: TIngredientsState = {
+  ingredientsRequest: false,
+  ingredientsError: false,
+  allIngredients: [], 
+};
+
+export const burgerIngredientsReducer = (
+  state = initialState,
+  action: TIngredientsActions
+): TIngredientsState => {
   switch (action.type) {
   case GET_INGREDIENTS_REQUEST:
     return {

@@ -5,12 +5,27 @@ import {
   DELETE_INGREDIENT,
   RESET_STATE
 } from '../actions/constants';
+import type { TBurgerConstructorActions } from '../actions/burger-constructor';
+import { TIngredient } from '../../utils/types';
 
-export const initialState = {
-  ingredients: []
+type TConstructorState = {
+  ingredients: Array<TIngredient>;
+  bun: TIngredient | null;
+  totalPrice: number;
+  constructorIngredients: Array<TIngredient>;
 };
 
-export const burgerConstructorReducer = (state = initialState, action) => {
+export const initialState: TConstructorState = {
+  ingredients: [],
+  constructorIngredients: [],
+  bun: null,
+  totalPrice: 0
+};
+
+export const burgerConstructorReducer = (
+  state = initialState,
+  action: TBurgerConstructorActions
+): TConstructorState => {
   switch (action.type) {
   case ADD_BUN:
     return {

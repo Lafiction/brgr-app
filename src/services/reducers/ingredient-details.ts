@@ -3,13 +3,23 @@ GET_DETAILS_REQUEST,
 SHOW_DETAILS,
 CLOSE_DETAILS
 } from '../actions/constants';
+import type { TDetailsActions } from "../actions/get-details";
+import { TIngredientDetails } from "../../utils/types";
 
-export const initialState = {
+type TDetailsState = {
+  details: TIngredientDetails | null;
+  showDetails: boolean;
+};
+
+export const initialState: TDetailsState = {
   details: null,
   showDetails: false,
 };
 
-export const ingredientDetailsReducer = (state = initialState, action) => {
+export const ingredientDetailsReducer = (
+  state = initialState,
+  action: TDetailsActions
+): TDetailsState => {
   switch (action.type) {
   case GET_DETAILS_REQUEST:
     return {

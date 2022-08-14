@@ -4,14 +4,25 @@ import {
   GET_REGISTRATION_FAILED,
   SET_REGISTRATION,
 } from '../actions/constants';
+import type { TRegistrationActions } from '../actions/registration';
+import type { TRegistrationForm } from '../../utils/types';
   
-const initialState = {
+type TRegistrationState = {
+  form: TRegistrationForm;
+  registrationRequest: boolean;
+  registrationFailed: boolean;
+};
+
+const initialState: TRegistrationState = {
   form: { email: '', password: '', name: '' },
   registrationRequest: false,
   registrationFailed: false,
 };
-  
-export const registrationReducer = (state = initialState, action) => {
+
+export const registrationReducer = (
+  state = initialState,
+  action: TRegistrationActions
+): TRegistrationState => {
   switch (action.type) {
     case GET_REGISTRATION_REQUEST:
       return {

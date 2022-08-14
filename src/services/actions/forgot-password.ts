@@ -2,15 +2,42 @@ import {
   FORGOT_PASSWORD_REQUEST,
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_FAILED,
+  RECOVERY_PASSWORD
 } from './constants';
 import { checkResponse, BURGER_API } from '../api';
+import { AppDispatch, AppThunk } from '../../services/hooks';
+
+interface IForgotPasswordRequest {
+  readonly type: typeof FORGOT_PASSWORD_REQUEST;
+}
+
+interface IForgotPasswordSuccess {
+  readonly type: typeof FORGOT_PASSWORD_SUCCESS;
+  form: { email: string };
+}
+
+interface IForgotPasswordFailed {
+  readonly type: typeof FORGOT_PASSWORD_FAILED;
+}
+
+interface IResetPassword {
+  readonly type: typeof RECOVERY_PASSWORD;
+  payload: { email: string };
+}
+
+export type TForgotPasswordActions =
+  | IForgotPasswordRequest
+  | IForgotPasswordSuccess
+  | IForgotPasswordFailed
+  | IResetPassword;
+
   
 function forgotPasswordRequest() {
   return {
     type: FORGOT_PASSWORD_REQUEST
   }
 }
-function forgotPasswordSuccess(data) {
+function forgotPasswordSuccess(data: any) {
   return {
     type: FORGOT_PASSWORD_SUCCESS,
     form: data.user
@@ -22,8 +49,8 @@ function forgotPasswordFaled() {
   }
 }
 
-export function forgotPassword(form) {
-  return function (dispatch) {
+export const forgotPassword: AppThunk = (form) => {
+  return function (dispatch: AppDispatch) {
     dispatch(forgotPasswordRequest());
     fetch(`${BURGER_API}/password-reset`, {
       method: "POST",

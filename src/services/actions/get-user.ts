@@ -6,13 +6,33 @@ import {
   UPDATE_USER_SUCCESS
 } from './constants';
 import { getUserRequest, updateToken } from '../api';
+import { AppDispatch } from '../../services/hooks';
+import type { TRegistrationForm } from '../../utils/types';
+
+interface IGetUserRequest {
+  readonly type: typeof GET_USER_REQUEST;
+}
+
+interface IGetUserSuccess {
+  readonly type: typeof GET_USER_SUCCESS;
+  form: TRegistrationForm;
+}
+
+interface IGetUserFailed {
+  readonly type: typeof GET_USER_FAILED;
+}
+
+export type TGetUserActions =
+  | IGetUserRequest
+  | IGetUserSuccess
+  | IGetUserFailed;
 
 function userRequest() {
   return {
     type: GET_USER_REQUEST
   }
 }
-function userSuccess(response) {
+function userSuccess(response: any) {
   return {
     type: GET_USER_SUCCESS,
     form: response.user
@@ -23,7 +43,7 @@ function userFaled() {
     type: GET_USER_FAILED
   }
 }
-function updateUserSuccess(response) {
+function updateUserSuccess(response: any) {
   return {
     type: UPDATE_USER_SUCCESS,
     form: response.user
@@ -31,7 +51,7 @@ function updateUserSuccess(response) {
 }
 
 export const getUser = () => {
-  return async function (dispatch) {
+  return async function (dispatch: AppDispatch) {
     dispatch(userRequest());
     try {
       const response = await getUserRequest();
@@ -39,7 +59,7 @@ export const getUser = () => {
         dispatch(userSuccess(response));
         dispatch(updateUserSuccess(response));
       }
-    } catch (error) {
+    } catch (error: any) {
       try {
         if (
           error.message === 'jwt expired' || error.message === 'Token is invalid'

@@ -1,3 +1,10 @@
+import { TBurgerConstructorActions } from '../services/actions/burger-constructor';
+import { TDetailsActions } from '../services/actions/get-details';
+import { TIngredientsActions } from '../services/actions/get-ingredients';
+import { TLoginActions } from '../services/actions/login';
+import { TOrderNumberActions } from '../services/actions/get-order-number';
+import { TRegistrationActions } from '../services/actions/registration';
+
 export type TIngredient = {
   type: 'bun' | 'sauce' | 'main';
   _id: string;
@@ -52,3 +59,20 @@ export type TUpdateUser = {
   email: string;
   password: string;
 };
+
+export type TLoginForm = {
+  email: string;
+  password: string;
+};
+
+export type TRegistrationForm = TLoginForm & {
+  name: string;
+};
+
+export type TAppActions =
+  | TRegistrationActions
+  | TLoginActions
+  | TOrderNumberActions
+  | TBurgerConstructorActions
+  | TDetailsActions
+  | TIngredientsActions;

@@ -4,8 +4,18 @@ import {
   GET_AUTH_FAILED,
   SET_AUTH,
 } from '../actions/constants';
+import type { TLoginActions } from '../actions/login';
+import { TLoginForm } from '../../utils/types';
 
-const initialState = {
+type TLoginState = {
+  form: TLoginForm;
+  authRequest: boolean;
+  authFailed: boolean;
+  accessToken: string;
+  isAuth: boolean;
+};
+
+const initialState: TLoginState = {
   form: { email: '', password: '' },
   authRequest: false,
   authFailed: false,
@@ -13,7 +23,10 @@ const initialState = {
   isAuth: false,
 };
   
-export const loginReducer = (state = initialState, action) => {
+export const loginReducer = (
+  state = initialState,
+  action: TLoginActions
+): TLoginState => {
   switch (action.type) {
     case GET_AUTH_REQUEST:
       return {

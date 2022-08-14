@@ -4,8 +4,17 @@ import {
   FORGOT_PASSWORD_FAILED,
   RECOVERY_PASSWORD,
 } from '../actions/constants';
+import type { TForgotPasswordActions } from '../actions/forgot-password';
   
-const initialState = {
+type TForgotPasswordState = {
+  form: {
+    email: string;
+  };
+  forgotPasswordRequest: boolean;
+  forgotPasswordFailed: boolean;
+};
+
+const initialState: TForgotPasswordState = {
   form: {
     email: '',
   },
@@ -13,7 +22,10 @@ const initialState = {
   forgotPasswordFailed: false,
 };
   
-export const forgotPasswordReducer = (state = initialState, action) => {
+export const forgotPasswordReducer = (
+  state = initialState,
+  action: TForgotPasswordActions
+): TForgotPasswordState => {
   switch (action.type) {
     case FORGOT_PASSWORD_REQUEST: {
       return {
@@ -44,4 +56,3 @@ export const forgotPasswordReducer = (state = initialState, action) => {
       return state;
   }
 };
-  

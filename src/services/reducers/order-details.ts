@@ -6,14 +6,27 @@ import {
   CLOSE_ORDER,
 } from '../actions/constants';
 
-export const initialState = {
+import type { TOrderNumberActions } from '../actions/get-order-number';
+import { TOrderNumber } from '../../utils/types';
+
+type TDetailsState = {
+  orderRequest: boolean;
+  orderFailed: boolean;
+  order: TOrderNumber | null;
+  showOrderModal: boolean;
+};
+
+export const initialState: TDetailsState = {
   orderRequest: false,
   orderFailed: false,
   order: null,
   showOrderModal: false,
 };
 
-export const orderDetailsReducer = (state = initialState, action) => {
+export const orderDetailsReducer = (
+  state = initialState,
+  action: TOrderNumberActions
+): TDetailsState => {
   switch (action.type) {
   case GET_ORDER_REQUEST:
     return {

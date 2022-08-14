@@ -1,13 +1,13 @@
 import {combineReducers} from 'redux';
-import {burgerIngredientsReducer} from './burger-ingredients.js';
-import {ingredientDetailsReducer} from './ingredient-details.js';
-import {burgerConstructorReducer} from './burger-constructor.js';
-import {orderDetailsReducer} from './order-details.js';
+import {burgerIngredientsReducer} from './burger-ingredients';
+import {ingredientDetailsReducer} from './ingredient-details';
+import {burgerConstructorReducer} from './burger-constructor';
+import {orderDetailsReducer} from './order-details';
 import { registrationReducer } from './registration';
 import { loginReducer } from './login';
 import { logoutReducer } from './logout';
 import { userReducer } from './user';
-import { userUpdateReducer } from './userUpdate';
+import { userUpdateReducer } from './user-update';
 import { forgotPasswordReducer } from './forgot-password';
 import { resetPasswordReducer } from './reset-password';
 import { store } from '../store';
@@ -18,7 +18,7 @@ export const rootReducer = combineReducers({
   ingredientDetails: ingredientDetailsReducer,
   orderDetails: orderDetailsReducer,
   login: loginReducer,
-  registration: registrationReducer, 
+  registration: registrationReducer,
   logout: logoutReducer,
   user: userReducer,
   updateUser: userUpdateReducer,
