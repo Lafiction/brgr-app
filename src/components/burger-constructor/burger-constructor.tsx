@@ -74,9 +74,10 @@ const BurgerConstructor: React.FC = () => {
 
   function handleOpenModal() {
     if (isUser) {
-      const orderedBuns = [bun._id, bun._id];
-      const orderedIngredients = ingredients.map((ingredient: TIngredient) => ingredient._id);
-      dispatch(getOrderNumber(orderedBuns.concat(orderedIngredients)));
+      const orderedIngredients: string[] = ingredients.map((ingredient) => ingredient._id);
+      orderedIngredients.unshift(bun?._id as string);
+      orderedIngredients.push(bun?._id as string);
+      dispatch(getOrderNumber(orderedIngredients));
       dispatch({ type: SHOW_ORDER });
     } else {
       history.push('/login');

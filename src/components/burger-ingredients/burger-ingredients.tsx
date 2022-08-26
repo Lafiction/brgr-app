@@ -11,6 +11,7 @@ import { getDetails } from '../../services/actions/get-details';
 import { TabFixed } from '../../services/fix-ui-components';
 import { TRootState } from '../../services/reducers/root-reducer';
 import { TIngredient } from '../../utils/types';
+import { useAppDispatch, useAppSelector } from '../../services/hooks';
 
 type TLocation = {
   main?: Location<TLocation>;
@@ -18,13 +19,13 @@ type TLocation = {
 };
 
 const BurgerIngredients = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation<TLocation>();
   const history = useHistory();
 
-  const {allIngredients} = useSelector((store: TRootState) => store.allIngredients);
-  const details = useSelector((store: TRootState) => store.ingredientDetails.details);
-  const showDetails = useSelector((store: TRootState) => store.ingredientDetails.showDetails);
+  const {allIngredients} = useAppSelector(store => store.allIngredients);
+  const details = useAppSelector(store => store.ingredientDetails.details);
+  const showDetails = useAppSelector(store => store.ingredientDetails.showDetails);
 
   const buns = allIngredients.filter((ingredient: TIngredient) => ingredient.type === 'bun');
   const sauces = allIngredients.filter((ingredient: TIngredient) => ingredient.type === 'sauce');

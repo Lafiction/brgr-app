@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
 import {
   Input
@@ -8,15 +7,14 @@ import { RECOVERY_PASSWORD } from '../../services/actions/constants';
 import { forgotPassword } from '../../services/actions/forgot-password';
 import styles from './forgot-password.module.css';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
-import { TRootState } from '../../services/reducers/root-reducer';
 import { ButtonFixed } from '../../services/fix-ui-components';
 
 
 export const ForgotPasswordPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const isUser = useSelector((store: TRootState) => store.user.isUser);
-  const form = useAppSelector((store: TRootState) => store.forgotPass?.form);
+  const isUser = useAppSelector(store => store.user.isUser);
+  const form = useAppSelector(store => store.forgotPassword.form);
   if (isUser) {
     history.push('/');
   }

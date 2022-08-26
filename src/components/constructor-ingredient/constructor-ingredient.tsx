@@ -78,8 +78,6 @@ const ConstructorIngredient: React.FC<TOrderedIngredient> = ({
     });
   };
 
-  //drag(drop(ref));
-
   return (
     <div className={styles.elementContainer}
       key={item.payload._id}

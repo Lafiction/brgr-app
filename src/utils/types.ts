@@ -28,7 +28,8 @@ export type TIngredient = {
   fat: number;
   carbohydrates: number;
   calories: number;
-  payload?: any;
+  payload: any;
+  dragId: string;
 };
 
 export type TIngredients = {
@@ -107,12 +108,6 @@ export type TAppActions =
   | TDetailsActions
   | TIngredientsActions
   | TWsActions;
-
-//export type TOrder = {
-  //name: string;
-  //order: { number: number };
-  //success: boolean;
-//};
 
 export type TOrders = {
   createdAt: string;

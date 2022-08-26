@@ -10,6 +10,7 @@ type TIngredientsState = {
   ingredientsRequest: boolean;
   ingredientsError: boolean;
   allIngredients: Array<TIngredient>;
+  [key: string]: any;
 };
 
 export const initialState: TIngredientsState = {
