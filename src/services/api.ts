@@ -11,7 +11,8 @@ export function orderBurgerApi(arr: string[]) {
   const response = fetch(`${BURGER_API}/orders`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      Authorization: getCookie('accessToken') as string,
     },
     body: JSON.stringify({ingredients: arr})
   })
@@ -41,6 +42,7 @@ export const updateToken = async (token : string | undefined) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: getCookie('accessToken')!,
     },
     body: JSON.stringify({
       token: token,

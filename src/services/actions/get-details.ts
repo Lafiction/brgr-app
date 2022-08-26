@@ -3,8 +3,7 @@ import {
   SHOW_DETAILS,
   CLOSE_DETAILS
 } from './constants';
-
-import { TIngredientDetails } from '../../utils/types';
+import { TIngredientDetails, TOrders } from '../../utils/types';
 
 interface IGetDetailsRequest {
   readonly type: typeof GET_DETAILS_REQUEST;
@@ -21,7 +20,7 @@ interface ICloseDetails {
  
 export type TDetailsActions = IGetDetailsRequest | IShowDetails | ICloseDetails;
 
-export const getDetails = (ingredient: TIngredientDetails) => {
+export const getDetails = (ingredient: TIngredientDetails | TOrders) => {
   return {
     type: GET_DETAILS_REQUEST,
     details: ingredient

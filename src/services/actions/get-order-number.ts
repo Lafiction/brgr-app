@@ -6,7 +6,7 @@ import {
   CLOSE_ORDER
 } from './constants';
 import { orderBurgerApi } from '../api';
-import { AppDispatch } from '../../services/hooks';
+import { AppDispatch, AppThunk } from '../../services/hooks';
 import { TOrderNumber } from '../../utils/types';
 
 interface IGetOrderRequest {
@@ -54,7 +54,7 @@ function getOrderError() {
   }
 }
 
-export const getOrderNumber = (orderData: string[]) => (dispatch: AppDispatch) => {
+export const getOrderNumber: AppThunk = (orderData: string[]) => (dispatch: AppDispatch) => {
   dispatch(getOrderRequest());
   return orderBurgerApi(orderData)
   .then(res => {

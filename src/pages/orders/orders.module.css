@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  width: 1200px;
+  margin: 120px auto 0;
+  text-align: left;
+  justify-content: space-between;
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  width: 800px;
+  text-align: left;
+}
+
+.link {
+  text-decoration: none;
+  cursor: pointer;
+}

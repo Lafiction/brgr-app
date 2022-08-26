@@ -1,0 +1,39 @@
+.container {
+  margin: 40px auto;
+  text-align: left;
+  max-width: 1200px;
+}
+
+.feed {
+  display: flex;
+}
+
+.feedItems {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  text-align: left;
+  height: 720px;
+  overflow-x: auto;
+}
+
+.orders {
+  display: flex;
+}
+
+.ready {
+  width: 200px;
+}
+
+.link {
+  text-decoration: none;
+  cursor: pointer;
+} 
+  
+.readyNumber {
+  color: #00cccc;
+}
+
+.inProgressNumber {
+  color: #fff;
+}
