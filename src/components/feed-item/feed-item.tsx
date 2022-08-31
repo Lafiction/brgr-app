@@ -78,19 +78,18 @@ export const FeedItem: React.FC<TFeedItem> = ({ data, handleOpenModal }) => {
 
       <div className={clsx(styles.details, 'mt-5')}>
         <div className={styles.ingredients}>
-          {data &&ingredients.map((data) => {
+          {data &&ingredients.map((data, index) => {
+            console.log('datadata', data);
             return (
-              <>
+              <div className={styles.item} key={index}>
                 {data && (
-                  <div className={styles.item} key={data._id}>
-                    <img
-                      className={styles.image}
-                      src={data.image}
-                      alt='Ингредиент бургера'
-                    />
-                  </div>
+                  <img
+                    className={styles.image}
+                    src={data.image}
+                    alt='Ингредиент бургера'
+                  />
                 )}
-              </>
+              </div>
             );
           })}
           {otherIngredients && (

@@ -7,6 +7,7 @@ import {
 } from '../../services/actions/websocket';
 import { getCookie } from '../../utils/cookie';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
+import styles from './order-info.module.css';
 
 export function OrderInfoPage() {
   const dispatch = useAppDispatch();
@@ -21,8 +22,8 @@ export function OrderInfoPage() {
   }, [dispatch]);
 
   return (
-    <>
+    <div className={styles.container}>
       {data && <OrderInfo details={data} />}
-    </>
+    </div>
   );
 };

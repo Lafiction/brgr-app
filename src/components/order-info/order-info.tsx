@@ -75,31 +75,27 @@ export const OrderInfo = ({ details }: TDetails) => {
         Состав:
       </p>
       <div className={styles.ingredients}>
-        {countedItems.map((data) => {
+        {countedItems.map((data, index) => {
           return (
-            <>
-              {data.item && (
-                <div className={clsx(styles.item, 'mb-5')} key={data.item._id}>
-                  <div className={styles.itemDetails}>
-                    <div className={styles.itemImage}>
-                      <img className={clsx(styles.image)} src={data?.item?.image} alt='Ингредиент бургера'/>
-                    </div>
-                    <p className={clsx(styles.itemName, 'text text_type_main-default mr-4')}>
-                      {data?.item?.name}
-                    </p>
-                  </div>
-
-                  <div className={styles.total}>
-                    <span className={clsx(styles.itemPrice, 'text text_type_digits-default')}>
-                      <>{data.count} x {data?.item?.price}</>
-                    </span>
-                    <div className='ml-2'>
-                      <CurrencyIcon type='primary' />
-                    </div>
-                  </div>
+            <div className={clsx(styles.item, 'mb-5')} key={index}>
+              <div className={styles.itemDetails}>
+                <div className={styles.itemImage}>
+                  <img className={clsx(styles.image)} src={data?.item?.image} alt='Ингредиент бургера'/>
                 </div>
-              )}
-            </>
+                <p className={clsx(styles.itemName, 'text text_type_main-default mr-4')}>
+                  {data?.item?.name}
+                </p>
+              </div>
+
+              <div className={styles.total}>
+                <span className={clsx(styles.itemPrice, 'text text_type_digits-default')}>
+                  <>{data.count} x {data?.item?.price}</>
+                </span>
+                <div className='ml-2'>
+                  <CurrencyIcon type='primary' />
+                </div>
+              </div>
+            </div>
           );
         })}
       </div>
