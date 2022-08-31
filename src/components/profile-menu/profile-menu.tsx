@@ -1,17 +1,15 @@
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { getUser } from '../../services/actions/get-user';
 import { logout } from '../../services/actions/logout';
 import styles from './profile-menu.module.css';
-import { TRootState } from '../../services/reducers/root-reducer';
 import { TProfileMenu } from '../../utils/types';
-import { useAppDispatch } from '../../services/hooks';
+import { useAppDispatch, useAppSelector } from '../../services/hooks';
 
 export const ProfileMenu: React.FC<TProfileMenu> = ({ activeLink }) => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const isUser = useSelector((store: TRootState) => store.user.isUser);
+  const isUser = useAppSelector(store => store.user.isUser);
 
   useEffect(() => {
     dispatch(getUser());

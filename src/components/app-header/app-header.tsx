@@ -19,7 +19,7 @@ const AppHeader: React.FC = () => {
           <span className='text_type_main-default pl-2 pr-10'>Конструктор</span>
         </NavLink>
         <NavLink
-          to='/'
+          to='/feed'
           className={style.navButton}
         >
           <ListIcon type='secondary' />

@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { Route, Redirect, RouteProps } from 'react-router-dom';
 import { getCookie } from '../../utils/cookie';
 import { getUser } from '../../services/actions/get-user';
-
-import { TRootState } from '../../services/reducers/root-reducer';
+import { useAppSelector } from '../../services/hooks';
 
 export const ProtectedRoute: React.FC<RouteProps> = ({ children, ...rest }) => {
-  const isUser = useSelector((store: TRootState) => store.user.isUser);
+  const isUser = useAppSelector(store => store.user.isUser);
   const isToken = getCookie('accessToken');
   const [isUserLoaded, setUserLoaded] = useState(false);
 

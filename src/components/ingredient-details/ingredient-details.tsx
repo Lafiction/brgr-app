@@ -1,7 +1,7 @@
 import styles from './ingredient-details.module.css';
 import { TIngredientDetails } from '../../utils/types';
 type IDetails = {
-  details: TIngredientDetails | undefined;
+  details: TIngredientDetails | null;
 };
 
 const IngredientDetails = ({ details }: IDetails) => {

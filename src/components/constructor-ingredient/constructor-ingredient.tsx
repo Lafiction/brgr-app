@@ -1,5 +1,4 @@
 import { useRef } from 'react';
-import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 import {
   DragIcon,
@@ -8,6 +7,7 @@ import {
 import styles from './constructor-ingredient.module.css';
 import { DELETE_INGREDIENT } from '../../services/actions/constants';
 import { TIngredient } from '../../utils/types';
+import { useAppDispatch } from '../../services/hooks';
 
 type TIngredientPropTypes = {
   _id: string;
@@ -33,7 +33,7 @@ const ConstructorIngredient: React.FC<TOrderedIngredient> = ({
 }) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [{handlerId}, drop] = useDrop({
     accept: 'item',
     collect(monitor) {
@@ -78,7 +78,7 @@ const ConstructorIngredient: React.FC<TOrderedIngredient> = ({
     });
   };
 
-  //drag(drop(ref));
+  drag(drop(ref));
 
   return (
     <div className={styles.elementContainer}

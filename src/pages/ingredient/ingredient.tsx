@@ -6,7 +6,7 @@ import { useAppSelector } from '../../services/hooks';
 
 export const IngredientPage: React.FC = () => {
   const history = useHistory();
-  const ingredients = useAppSelector(state => state.allIngredients);
+  const ingredients = useAppSelector((store) => store.allIngredients.allIngredients);
   const id = history.location.pathname.replace('/ingredients/', '');
 
   return (

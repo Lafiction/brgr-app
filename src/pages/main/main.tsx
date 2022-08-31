@@ -8,7 +8,7 @@ import { TIngredient } from '../../utils/types';
 import styles from './main.module.css';
 
 type TItems = {
-  allIngredients: { [key: string]: TIngredient };
+  allIngredients: TIngredient[];
 };
 
 export const MainPage: React.FC<TItems> = ({ allIngredients }) => {

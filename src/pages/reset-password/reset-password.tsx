@@ -6,23 +6,21 @@ import {
 import styles from './reset-password.module.css';
 import { SET_PASSWORD } from '../../services/actions/constants';
 import { resetPassword } from '../../services/actions/reset-password';
-import { TRootState } from '../../services/reducers/root-reducer';
-import { useAppDispatch } from '../../services/hooks';
+import { useAppDispatch, useAppSelector } from '../../services/hooks';
 import { ButtonFixed } from '../../services/fix-ui-components';
 
 export const ResetPasswordPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const form = useSelector((store: TRootState) => store.resetPassword.form);
-  const isPasswordReseted = useSelector((store: TRootState) => store.resetPassword.isPasswordReseted);
-  const isUser = useSelector((store: TRootState) => store.user.isUser);
+  const form = useAppSelector(store => store.resetPassword.form);
+  const isPasswordReseted = useAppSelector(store => store.resetPassword.isPasswordReseted);
+  const isUser = useAppSelector(store => store.user.isUser);
+  const recoveryEmail = useAppSelector(store => store.forgotPassword.form.email);
 
   if (isUser) {
     history.push('/');
   }
 
-  const recoveryEmail = useSelector((store: TRootState) => store.forgotPassword.form.email);
-  
   if (recoveryEmail.length === 0) {
     history.goBack();
   }

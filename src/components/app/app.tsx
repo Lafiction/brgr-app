@@ -13,6 +13,10 @@ import {
   ProfilePage,
   NotFoundPage,
   IngredientPage,
+  OrdersPage,
+  OrderInfoPage,
+  FeedPage,
+  FeedInfoPage,
 } from '../../pages';
 import { TLocation } from '../../utils/types';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
@@ -39,6 +43,19 @@ const App: React.FC = () => {
           <LoginPage />
         </Route>
         
+        <Route path='/feed' exact={true}>
+          <FeedPage />
+        </Route>
+        <Route path='/feed/:id' exact={true}>
+          <FeedInfoPage />
+        </Route>
+        <ProtectedRoute path='/profile/orders' exact={true}>
+          <OrdersPage />
+        </ProtectedRoute>
+        <ProtectedRoute path='/profile/orders/:id' exact={true}>
+          <OrderInfoPage />
+        </ProtectedRoute>
+      
         <ProtectedRoute path='/profile' exact={true}>
           <ProfilePage />
         </ProtectedRoute>

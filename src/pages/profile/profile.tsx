@@ -9,17 +9,16 @@ import { SET_USER } from '../../services/actions/constants';
 import { getUser } from '../../services/actions/get-user';
 import { updateUser } from '../../services/actions/update-user';
 import styles from './profile.module.css';
-import { TRootState } from '../../services/reducers/root-reducer';
-import { useAppDispatch } from '../../services/hooks';
+import { useAppDispatch, useAppSelector } from '../../services/hooks';
 import { ButtonFixed } from '../../services/fix-ui-components';
 
 export const ProfilePage = () => {
   const dispatch = useAppDispatch();
-  const form = useSelector((store: TRootState) => store.user.form);
-  const password = useSelector((store: TRootState) => store.login.form.password);
-  const isUpdated = useSelector((store: TRootState) => store.updateUser.isUpdated);
-  const isUser = useSelector((store: TRootState) => store.user.isUser);
-  const updatedForm = useSelector((store: TRootState) => store.updateUser.form);
+  const form = useAppSelector(store => store.user.form);
+  const password = useAppSelector(store => store.login.form.password);
+  const isUpdated = useAppSelector(store => store.updateUser.isUpdated);
+  const isUser = useAppSelector(store => store.user.isUser);
+  const updatedForm = useAppSelector(store => store.updateUser.form);
   const [saveButton, setSaveButton] = useState(false);
 
   const [userData, setUserData] = useState({

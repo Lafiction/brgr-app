@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import { useDrop, DropTargetMonitor } from 'react-dnd';
 import { v1 as uuid } from 'uuid';
 import {
@@ -20,20 +19,18 @@ import {
 import { getOrderNumber } from '../../services/actions/get-order-number';
 import ConstructorIngredients from '../constructor-ingredients/constructor-ingredients';
 import { useHistory } from 'react-router-dom';
-
-import { TRootState } from '../../services/reducers/root-reducer';
 import { TIngredient } from '../../utils/types';
-import { useAppDispatch } from '../../services/hooks';
+import { useAppDispatch, useAppSelector } from '../../services/hooks';
 import { ButtonFixed } from '../../services/fix-ui-components';
 
 const BurgerConstructor: React.FC = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const isUser = useSelector((state: TRootState) => state.user.isUser);
-  const { bun, ingredients } = useSelector((state: TRootState) => state.burgerConstructor);
-  const showModal = useSelector((state: TRootState) => state.orderDetails.showOrderModal);
-  const order = useSelector((state: TRootState) => state.orderDetails.order);
-  const storeIngredients = useSelector((state: TRootState) => state.allIngredients.allIngredients);
+  const isUser = useAppSelector(state => state.user.isUser);
+  const { bun, ingredients } = useAppSelector(state => state.burgerConstructor);
+  const showModal = useAppSelector(state => state.orderDetails.showOrderModal);
+  const order = useAppSelector(state => state.orderDetails.order);
+  const storeIngredients = useAppSelector(state => state.allIngredients.allIngredients);
 
   const [{currentBun}, drop] = useDrop({
     accept: 'bun',
@@ -45,7 +42,7 @@ const BurgerConstructor: React.FC = () => {
         type: ADD_BUN,
         item: {
           ...item,
-          payload: storeIngredients.find((ingredient: any) => ingredient._id === item._id),
+          payload: storeIngredients.find(ingredient => ingredient._id === item._id),
           dragId: uuid()
         }
       });
@@ -71,20 +68,21 @@ const BurgerConstructor: React.FC = () => {
 
   const totalPrice = useMemo(() => {
     let bunPrice = bun ? bun.payload.price * 2 : 0;
-    let ingredientsPrice = ingredients.length > 0 ? ingredients.reduce((cur: number, acc: any) => acc.payload.price + cur, 0) : 0;
+    let ingredientsPrice = ingredients.length > 0 ? ingredients.reduce((cur, acc) => acc.payload.price + cur, 0) : 0;
     return ingredientsPrice + bunPrice;
   }, [bun, ingredients]);
 
   function handleOpenModal() {
     if (isUser) {
-      const orderedBuns = [bun._id, bun._id];
-      const orderedIngredients = ingredients.map((ingredient: TIngredient) => ingredient._id);
-      dispatch(getOrderNumber(orderedBuns.concat(orderedIngredients)));
+      const orderedIngredients: string[] = ingredients.map((ingredient) => ingredient._id);
+      orderedIngredients.unshift(bun?._id as string);
+      orderedIngredients.push(bun?._id as string);
+      dispatch(getOrderNumber(orderedIngredients));
       dispatch({ type: SHOW_ORDER });
     } else {
       history.push('/login');
     }
-  }  
+  }
 
   function handleCloseModal() {
     dispatch({type: CLOSE_ORDER});

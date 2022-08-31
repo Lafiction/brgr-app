@@ -1,8 +1,7 @@
 import { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 import { REPLACE_INGREDIENT } from '../../services/actions/constants';
 import ConstructorIngredient from '../constructor-ingredient/constructor-ingredient';
-
+import { useAppDispatch } from '../../services/hooks';
 import { TIngredient as TElementDetails } from '../../utils/types';
 
 type TIngredient = {
@@ -16,7 +15,7 @@ type TIngredientProps = {
 };
 
 const ConstructorIngredients: React.FC<TIngredientProps> = ({ ingredients }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const moveIngredient = useCallback((dragIndex: number, hoverIndex: number) => {
     const dragCard = ingredients[dragIndex];
     const newCards = [...ingredients];
@@ -31,7 +30,7 @@ const ConstructorIngredients: React.FC<TIngredientProps> = ({ ingredients }) => 
 
   return (
     <>
-      {ingredients.map((item: TIngredient, index: number) => (
+      {ingredients.map((item, index) => (
         <ConstructorIngredient 
           key={item.dragId} 
           index={index} 
