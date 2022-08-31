@@ -38,7 +38,7 @@ function getRegistrationRequest() {
     type: GET_REGISTRATION_REQUEST
   }
 }
-function getRegistrationSuccess(data: any) {
+function getRegistrationSuccess(data: { user: any; }) {
   return {
     type: GET_REGISTRATION_SUCCESS,
     form: data.user,

@@ -1,5 +1,5 @@
 import { getCookie } from '../utils/cookie';
-import { TUpdateUser } from '../utils/types';
+import { TUpdateUserForm } from '../utils/types';
 
 export const checkResponse = (response: Response) => {
   return response.ok ? response.json() : response.json().then((error) => Promise.reject(error));
@@ -50,7 +50,7 @@ export const updateToken = async (token : string | undefined) => {
   }).then(checkResponse);
 };
 
-export const getUpdateUserRequest = async (form: TUpdateUser) => {
+export const getUpdateUserRequest = async (form: TUpdateUserForm) => {
   const res = await fetch(`${BURGER_API}/auth/user`, {
     method: 'PATCH',
     body: JSON.stringify(form),

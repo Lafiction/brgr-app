@@ -5,7 +5,7 @@ import {
   GET_LOGOUT_FAILED
 } from './constants';
 import { checkResponse, BURGER_API } from '../api';
-import { AppDispatch } from '../../services/hooks';
+import { AppDispatch, AppThunk } from '../../services/hooks';
 
 interface IGetLogoutRequest {
   readonly type: typeof GET_LOGOUT_REQUEST;
@@ -40,7 +40,7 @@ function getLogoutFaled() {
   }
 }
 
-export const logout = () => {
+export const logout: AppThunk = () => {
   return function (dispatch: AppDispatch) {
     dispatch(getLogoutRequest());
     fetch(`${BURGER_API}/auth/logout`, {

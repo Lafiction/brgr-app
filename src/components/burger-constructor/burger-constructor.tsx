@@ -42,7 +42,7 @@ const BurgerConstructor: React.FC = () => {
         type: ADD_BUN,
         item: {
           ...item,
-          payload: storeIngredients.find((ingredient: any) => ingredient._id === item._id),
+          payload: storeIngredients.find(ingredient => ingredient._id === item._id),
           dragId: uuid()
         }
       });
@@ -68,7 +68,7 @@ const BurgerConstructor: React.FC = () => {
 
   const totalPrice = useMemo(() => {
     let bunPrice = bun ? bun.payload.price * 2 : 0;
-    let ingredientsPrice = ingredients.length > 0 ? ingredients.reduce((cur: number, acc: any) => acc.payload.price + cur, 0) : 0;
+    let ingredientsPrice = ingredients.length > 0 ? ingredients.reduce((cur, acc) => acc.payload.price + cur, 0) : 0;
     return ingredientsPrice + bunPrice;
   }, [bun, ingredients]);
 

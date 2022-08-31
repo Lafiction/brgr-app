@@ -1,5 +1,4 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useMemo } from 'react';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { Location } from 'history';
 import styles from './burger-ingredients.module.css';
@@ -9,7 +8,6 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import { CLOSE_DETAILS, SHOW_DETAILS } from '../../services/actions/constants';
 import { getDetails } from '../../services/actions/get-details';
 import { TabFixed } from '../../services/fix-ui-components';
-import { TRootState } from '../../services/reducers/root-reducer';
 import { TIngredient } from '../../utils/types';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
 
@@ -27,9 +25,18 @@ const BurgerIngredients = () => {
   const details = useAppSelector(store => store.ingredientDetails.details);
   const showDetails = useAppSelector(store => store.ingredientDetails.showDetails);
 
-  const buns = allIngredients.filter((ingredient: TIngredient) => ingredient.type === 'bun');
-  const sauces = allIngredients.filter((ingredient: TIngredient) => ingredient.type === 'sauce');
-  const mains = allIngredients.filter((ingredient: TIngredient) => ingredient.type === 'main');
+  const buns = useMemo(
+    () => allIngredients.filter(ingredient => ingredient.type === 'bun'),
+    [allIngredients]
+  );
+  const sauces = useMemo(
+    () => allIngredients.filter(allIngredients => allIngredients.type === 'sauce'),
+    [allIngredients]
+  );
+  const mains = useMemo(
+    () => allIngredients.filter(allIngredients => allIngredients.type === 'main'),
+    [allIngredients]
+  );
 
   const [current, setCurrent] = React.useState('bun');
 
@@ -98,7 +105,7 @@ const BurgerIngredients = () => {
       <div className={styles.ingredientsContainer} onScroll={scrollToBlock}>
         <h2 className='text_type_main-medium' ref={tabBun}>Булки</h2>
         <div className={styles.ingredients}>
-          {buns.map((ingredient: TIngredient) => 
+          {buns.map(ingredient => 
             <Link
               key={ingredient._id}
               to={{
@@ -117,7 +124,7 @@ const BurgerIngredients = () => {
 
         <h2 className='text_type_main-medium' ref={tabSauce}>Соусы</h2>
         <div className={styles.ingredients}>
-          {sauces.map((ingredient: TIngredient) =>
+          {sauces.map(ingredient =>
             <Link
               key={ingredient._id}
               to={{
@@ -136,7 +143,7 @@ const BurgerIngredients = () => {
 
         <h2 className='text_type_main-medium' ref={tabMain}>Начинки</h2>
         <div className={styles.ingredients}>
-          {mains.map((ingredient: TIngredient) =>
+          {mains.map(ingredient =>
             <Link
               key={ingredient._id}
               to={{

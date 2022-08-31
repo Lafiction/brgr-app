@@ -2,7 +2,6 @@ import { Middleware, MiddlewareAPI } from 'redux';
 import { TRootState } from '../services/reducers/root-reducer';
 import { AppDispatch } from '../services/hooks';
 import { TWSAction } from '../utils/types';
-import { getCookie } from '../utils/cookie';
 
 export const createSocketMiddleware = (
   wsUrl: string,
@@ -16,14 +15,8 @@ export const createSocketMiddleware = (
       const { type, payload } = action;
       const { wsInit, onOpen, onClose, onError, onMessage } = wsActions;
 
-      if (type === wsInit && payload?.token) {
-        socket = new WebSocket(
-          `${wsUrl}?token=${getCookie('accessToken')
-            ?.split('Bearer ')
-            .join('')}`
-        );
-      } else if (type === wsInit) {
-        socket = new WebSocket(`${wsUrl}/all`);
+      if (type === wsInit) {
+        socket = new WebSocket(`${wsUrl}${payload.token}`);
       }
 
       if (socket) {

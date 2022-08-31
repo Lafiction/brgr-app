@@ -6,7 +6,7 @@ import {
 } from './constants';
 import { checkResponse, BURGER_API } from '../api';
 import { AppDispatch, AppThunk } from '../../services/hooks';
-
+import type { TForgotPasswordForm } from '../../utils/types';
 interface IForgotPasswordRequest {
   readonly type: typeof FORGOT_PASSWORD_REQUEST;
 }
@@ -49,7 +49,7 @@ function forgotPasswordFaled() {
   }
 }
 
-export const forgotPassword: AppThunk = (form) => {
+export const forgotPassword: AppThunk = (form: TForgotPasswordForm) => {
   return function (dispatch: AppDispatch) {
     dispatch(forgotPasswordRequest());
     fetch(`${BURGER_API}/password-reset`, {

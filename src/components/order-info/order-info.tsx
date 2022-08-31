@@ -15,7 +15,10 @@ export const OrderInfo = ({ details }: TDetails) => {
   const history = useHistory();
   const items = useAppSelector((store) => store.allIngredients.allIngredients);
   const id = history.location.pathname.replace(RegExp('^/[a-z]+/[a-z]+/|^/[a-z]+/'), '');
-  const data = details?.filter((elem: TOrders) => elem._id === id)[0];
+  const data = useMemo(
+    () => details?.filter(elem => elem._id === id)[0],
+    [details, id]
+  );
 
   const ingredients = useMemo(() => {
     return data?.ingredients
@@ -33,7 +36,7 @@ export const OrderInfo = ({ details }: TDetails) => {
     item: TIngredient | undefined;
     count: number | unknown;
   }[] = Object.entries(ingredients).map(([key, value]) => {
-    return { item: items.find((ingredient: any) => ingredient._id === key), count: value };
+    return { item: items.find(ingredient => ingredient._id === key), count: value };
   });
 
   const orderStatus: string =
@@ -48,7 +51,7 @@ export const OrderInfo = ({ details }: TDetails) => {
   const totalPrice = useMemo(() => {
     let total = 0;
     data?.ingredients.map((elem: string) => {
-      const orderedItems = items.find((data: any) => data._id === elem);
+      const orderedItems = items.find(data => data._id === elem);
       if (orderedItems) {
         total += orderedItems.price || 0;
       }
@@ -74,25 +77,29 @@ export const OrderInfo = ({ details }: TDetails) => {
       <div className={styles.ingredients}>
         {countedItems.map((data) => {
           return (
-            <div className={clsx(styles.item, 'mb-5')} key={Math.random()}>
-              <div className={styles.itemDetails}>
-                <div className={styles.itemImage}>
-                  <img className={clsx(styles.image)} src={data?.item?.image} alt='Ингредиент бургера'/>
-                </div>
-                <p className={clsx(styles.itemName, 'text text_type_main-default mr-4')}>
-                  {data?.item?.name}
-                </p>
-              </div>
+            <>
+              {data.item && (
+                <div className={clsx(styles.item, 'mb-5')} key={data.item._id}>
+                  <div className={styles.itemDetails}>
+                    <div className={styles.itemImage}>
+                      <img className={clsx(styles.image)} src={data?.item?.image} alt='Ингредиент бургера'/>
+                    </div>
+                    <p className={clsx(styles.itemName, 'text text_type_main-default mr-4')}>
+                      {data?.item?.name}
+                    </p>
+                  </div>
 
-              <div className={styles.total}>
-                <span className={clsx(styles.itemPrice, 'text text_type_digits-default')}>
-                  <>{data.count} x {data?.item?.price}</>
-                </span>
-                <div className='ml-2'>
-                  <CurrencyIcon type='primary' />
+                  <div className={styles.total}>
+                    <span className={clsx(styles.itemPrice, 'text text_type_digits-default')}>
+                      <>{data.count} x {data?.item?.price}</>
+                    </span>
+                    <div className='ml-2'>
+                      <CurrencyIcon type='primary' />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              )}
+            </>
           );
         })}
       </div>

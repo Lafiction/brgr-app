@@ -12,7 +12,7 @@ export function FeedInfoPage() {
   const details = useAppSelector(store => store.ws.messages);
 
   useEffect(() => {
-    dispatch(wsConnectionStart());
+    dispatch(wsConnectionStart('/all'));
     return () => {
       dispatch(wsConnectionClosed());
     };

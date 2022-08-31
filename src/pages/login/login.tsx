@@ -6,14 +6,13 @@ import { SET_AUTH } from '../../services/actions/constants';
 import { login } from '../../services/actions/login';
 import styles from './login.module.css';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
-import { TRootState } from '../../services/reducers/root-reducer';
 import { ButtonFixed } from '../../services/fix-ui-components';
 
 export const LoginPage = () => {
   const dispatch = useAppDispatch();
   const location = useLocation<{ from: string }>();
-  const isUser = useAppSelector((store: TRootState) => store.user.isUser);
-  const form = useAppSelector((store: TRootState) => store.login.form);
+  const isUser = useAppSelector(store => store.user.isUser);
+  const form = useAppSelector(store => store.login.form);
 
   function fillField(evt: React.ChangeEvent<HTMLInputElement>) {
     dispatch({

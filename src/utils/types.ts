@@ -85,7 +85,7 @@ export type TModal = {
   children?: any;
 };
 
-export type TUpdateUser = {
+export type TUpdateUserForm = {
   name: string;
   email: string;
   password: string;
@@ -98,6 +98,15 @@ export type TLoginForm = {
 
 export type TRegistrationForm = TLoginForm & {
   name: string;
+};
+
+export type TResetPasswordForm = {
+  password: string;
+  token: string;
+};
+
+export type TForgotPasswordForm = {
+  email: string;
 };
 
 export type TAppActions =

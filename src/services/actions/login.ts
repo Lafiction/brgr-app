@@ -36,7 +36,7 @@ function getAuthRequest() {
     type: GET_AUTH_REQUEST
   }
 }
-function getAuthSuccess(data: any) {
+function getAuthSuccess(data: { user: any; }) {
   return {
     type: GET_AUTH_SUCCESS,
     form: data.user,
@@ -48,7 +48,7 @@ function getAuthFaled() {
   }
 }
 
-export const login: AppThunk = (form) => {
+export const login: AppThunk = (form: TLoginForm) => {
   return function (dispatch: AppDispatch) {
     dispatch(getAuthRequest());
     fetch(`${BURGER_API}/auth/login`, {

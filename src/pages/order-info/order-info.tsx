@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { getUser } from '../../services/actions/get-user';
 import OrderInfo from '../../components/order-info/order-info';
 import {
@@ -15,7 +14,7 @@ export function OrderInfoPage() {
   
   useEffect(() => {
     dispatch(getUser());
-    dispatch(wsConnectionStart(getCookie('accessToken') as string));
+    dispatch(wsConnectionStart(`?token=${getCookie('accessToken')?.split('Bearer ').join('')}`));
     return () => {
       dispatch(wsConnectionClosed());
     };

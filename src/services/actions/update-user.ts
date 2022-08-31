@@ -8,7 +8,7 @@ import {
 } from './constants';
 import { updateToken, getUpdateUserRequest } from '../api';
 import { AppDispatch, AppThunk } from '../../services/hooks';
-import type { TRegistrationForm } from '../../utils/types';
+import type { TRegistrationForm, TUpdateUserForm } from '../../utils/types';
 
 interface IUpdateUserRequest {
   readonly type: typeof UPDATE_USER_REQUEST;
@@ -39,7 +39,7 @@ function updateUserRequest() {
     type: UPDATE_USER_REQUEST
   }
 }
-function updateUserSuccess(response: any) {
+function updateUserSuccess(response: { user: any; }) {
   return {
     type: UPDATE_USER_SUCCESS,
     form: response.user
@@ -57,7 +57,7 @@ function getUserSuccess() {
   }
 }
 
-export const updateUser: AppThunk = (form) => {
+export const updateUser: AppThunk = (form: TUpdateUserForm) => {
   return async function (dispatch: AppDispatch) {
     dispatch(updateUserRequest());
     try {

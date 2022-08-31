@@ -6,7 +6,7 @@ import {
   UPDATE_USER_SUCCESS
 } from './constants';
 import { getUserRequest, updateToken } from '../api';
-import { AppDispatch } from '../../services/hooks';
+import { AppDispatch, AppThunk } from '../../services/hooks';
 import type { TRegistrationForm } from '../../utils/types';
 
 interface IGetUserRequest {
@@ -32,7 +32,7 @@ function userRequest() {
     type: GET_USER_REQUEST
   }
 }
-function userSuccess(response: any) {
+function userSuccess(response: { user: any; }) {
   return {
     type: GET_USER_SUCCESS,
     form: response.user
@@ -43,14 +43,14 @@ function userFaled() {
     type: GET_USER_FAILED
   }
 }
-function updateUserSuccess(response: any) {
+function updateUserSuccess(response: { user: any; }) {
   return {
     type: UPDATE_USER_SUCCESS,
     form: response.user
   }
 }
 
-export const getUser = () => {
+export const getUser: AppThunk = () => {
   return async function (dispatch: AppDispatch) {
     dispatch(userRequest());
     try {

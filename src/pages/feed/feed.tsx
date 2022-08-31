@@ -44,7 +44,7 @@ export const FeedPage = () => {
   }
 
   useEffect(() => {
-    dispatch(wsConnectionStart());
+    dispatch(wsConnectionStart('/all'));
     return () => {
       dispatch(wsConnectionClosed());
     };
@@ -52,11 +52,11 @@ export const FeedPage = () => {
 
 
   const doneOrders = data
-    ? data?.filter((ingredient: any) => ingredient.status === 'done')
+    ? data?.filter(ingredient => ingredient.status === 'done')
     : null;
 
   const pendingOrders = data
-    ? data?.filter((ingredient: any) => ingredient.status === 'pending')
+    ? data?.filter(ingredient => ingredient.status === 'pending')
     : null;
 
   return (
@@ -70,7 +70,7 @@ export const FeedPage = () => {
       <div className={styles.feed}>
         <div className={styles.feedItems}>
           {data && data.length !== 0
-            ? data?.map((data: any) => {
+            ? data?.map(data => {
               return (
                 <Link
                   key={data._id}
@@ -90,14 +90,14 @@ export const FeedPage = () => {
           <div className={styles.orders}>
             <div className={styles.ready}>
               <p className={'text text_type_main-medium mb-6'}>Готовы:</p>
-              {doneOrders?.slice(0, 6).map((elem: any) => (
+              {doneOrders?.slice(0, 6).map(elem => (
                 <p className={clsx(styles.readyNumber, 'mb-2 text text_type_digits-default')} key={elem.number}>
                   {elem.number}
                 </p>
               ))}
             </div>
             <div className={styles.ready}>
-              {doneOrders?.slice(6, 12).map((elem: any) => (
+              {doneOrders?.slice(6, 12).map(elem => (
                 <p className={clsx(styles.readyNumber, 'mb-2 text text_type_digits-default')} key={elem.number}>
                   {elem.number}
                 </p>
@@ -107,7 +107,7 @@ export const FeedPage = () => {
               <p className={'text text_type_main-medium mb-6'}>В работе:</p>
               <p className={clsx(styles.inProgressNumber, 'text text_type_digits-default mb-2')}
               ></p>
-              {pendingOrders?.map((elem: any) => (
+              {pendingOrders?.map(elem => (
                 <p className={clsx(styles.inProgressNumber, 'text text_type_digits-default mb-2')} key={elem.number}>
                   {elem.number}
                 </p>

@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { Location } from 'history';
 import { getUser } from '../../services/actions/get-user';
@@ -43,7 +42,7 @@ export const OrdersPage = () => {
 
   useEffect(() => {
     dispatch(getUser());
-    dispatch(wsConnectionStart(getCookie('accessToken') as string));
+    dispatch(wsConnectionStart(`?token=${getCookie('accessToken')?.split('Bearer ').join('')}`));
     return () => {
       dispatch(wsConnectionClosed());
     };
@@ -63,7 +62,7 @@ export const OrdersPage = () => {
       <ProfileMenu activeLink={'history'} />
       <div className={styles.items}>
         {data && data.length !== 0
-          ? data?.map((data: any) => {
+          ? data?.map(data => {
               return (
                 <Link
                   key={data._id}

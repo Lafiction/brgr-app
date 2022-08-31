@@ -6,7 +6,7 @@ import {
 } from './constants';
 import { checkResponse, BURGER_API } from '../api';
 import { AppDispatch, AppThunk } from '../../services/hooks';
-import type { TRegistrationForm } from '../../utils/types';
+import type { TRegistrationForm, TResetPasswordForm } from '../../utils/types';
 
 interface IResetPasswordRequest {
   readonly type: typeof RESET_PASSWORD_REQUEST;
@@ -40,7 +40,7 @@ function resetPasswordRequest() {
     type: RESET_PASSWORD_REQUEST
   }
 }
-function resetPasswordSuccess(data: any) {
+function resetPasswordSuccess(data: { user: any; }) {
   return {
     type: RESET_PASSWORD_SUCCESS,
     form: data.user,
@@ -52,7 +52,7 @@ function resetPasswordFaled() {
   }
 }
 
-export const resetPassword: AppThunk = (form) => {
+export const resetPassword: AppThunk = (form: TResetPasswordForm) => {
   return async function (dispatch: AppDispatch) {
     dispatch(resetPasswordRequest());
     await fetch(`${BURGER_API}/auth/password-reset/reset`, {

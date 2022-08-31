@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import {
   Input
@@ -7,15 +6,14 @@ import {
 import { SET_REGISTRATION } from '../../services/actions/constants';
 import { registration } from '../../services/actions/registration';
 import styles from './registration.module.css';
-import { TRootState } from '../../services/reducers/root-reducer';
-import { useAppDispatch } from '../../services/hooks';
+import { useAppDispatch, useAppSelector } from '../../services/hooks';
 import { ButtonFixed } from '../../services/fix-ui-components';
 
 export const RegistrationPage = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const form = useSelector((store: TRootState) => store.registration.form);
-  const isUser = useSelector((store: TRootState) => store.user.isUser);
+  const form = useAppSelector(store => store.registration.form);
+  const isUser = useAppSelector(store => store.user.isUser);
 
   if (isUser) {
     history.push('/');

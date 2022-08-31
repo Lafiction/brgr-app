@@ -28,7 +28,7 @@ export const FeedItem: React.FC<TFeedItem> = ({ data, handleOpenModal }) => {
 
   const ingredients = useMemo(() => {
     return data.ingredients
-      .map(id => { return items.find((item: any) => item._id === id);})
+      .map(id => { return items.find(item => item._id === id);})
       .filter(data => data !== undefined)
       .slice(0, 5);
   }, [items, data.ingredients]);
@@ -80,15 +80,17 @@ export const FeedItem: React.FC<TFeedItem> = ({ data, handleOpenModal }) => {
         <div className={styles.ingredients}>
           {data &&ingredients.map((data) => {
             return (
-              <div className={styles.item} key={Math.random()}>
+              <>
                 {data && (
-                  <img
-                    className={styles.image}
-                    src={data.image}
-                    alt='Ингредиент бургера'
-                  />
+                  <div className={styles.item} key={data._id}>
+                    <img
+                      className={styles.image}
+                      src={data.image}
+                      alt='Ингредиент бургера'
+                    />
+                  </div>
                 )}
-              </div>
+              </>
             );
           })}
           {otherIngredients && (
