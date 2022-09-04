@@ -28,7 +28,7 @@ export const FeedPage = () => {
   const history = useHistory();
   const location = useLocation<TLocationState>();
   
-  const data = useAppSelector(store => store.ws.messages);
+  const data = useAppSelector(store => store.ws.orders);
   const total = useAppSelector(store => store.ws.total);
   const totalToday = useAppSelector(store => store.ws.totalToday);
   const showDetails = useAppSelector(store => store.ingredientDetails.showDetails);

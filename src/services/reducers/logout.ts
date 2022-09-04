@@ -3,7 +3,7 @@ import {
   GET_LOGOUT_SUCCESS,
   GET_LOGOUT_FAILED,
 } from '../actions/constants';
-import type { TLogoutActions } from "../actions/logout";
+import type { TLogoutActions } from '../actions/logout';
 
 type TLogoutState = {
   logout: boolean;
@@ -11,7 +11,7 @@ type TLogoutState = {
   logoutFailed: boolean;
 };
 
-const initialState: TLogoutState = {
+export const initialState: TLogoutState = {
   logout: false,
   logoutRequest: false,
   logoutFailed: false,

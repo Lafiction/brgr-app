@@ -9,16 +9,14 @@ import { TWsActions } from '../actions/websocket';
 import { TOrders } from '../../utils/types';
   
 type TWsState = {
-  wsConnected: Boolean;
-  messages: Array<TOrders> | null;
+  wsConnected?: Boolean;
   orders: Array<TOrders> | null;
-  total: number | null;
-  totalToday: number | null;
+  total?: number | null;
+  totalToday?: number | null;
 };
   
-const initialState: TWsState = {
+export const initialState: TWsState = {
   wsConnected: false,
-  messages: null,
   orders: null,
   total: null,
   totalToday: null,
@@ -47,14 +45,14 @@ export const wsReducer = (
     case WS_GET_ALL_MESSAGE:
       return {
         ...state,
-        messages: action.payload.orders,
+        orders: action.payload.orders,
         total: action.payload.total,
         totalToday: action.payload.totalToday,
       };
     case WS_GET_USER_MESSAGE:
       return {
         ...state,
-        messages: action.payload.orders,
+        orders: action.payload.orders,
       };
     default:
       return state;
