@@ -72,6 +72,9 @@ const App: React.FC = () => {
         <Route path='/' exact={true}>
           <MainPage allIngredients={allIngredients} />
         </Route>
+        <Route path='/brgr-app' exact={true}>
+          <MainPage allIngredients={allIngredients} />
+        </Route>
         <Route path='/ingredients/:id' exact={true}>
           <IngredientPage />
         </Route>
