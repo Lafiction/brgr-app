@@ -97,7 +97,7 @@ const BurgerConstructor: React.FC = () => {
         </Modal>
       }
 
-      <div className={clsx(styles.ingredients, 'mt-15 ml-8 mb-2')} ref={drop}>
+      <div className={clsx(styles.buns, 'mt-15 ml-8 mb-2')} ref={drop}>
         {bun ? (
           <ConstructorElement
             type='top'
@@ -113,7 +113,7 @@ const BurgerConstructor: React.FC = () => {
           )}
       </div>
 
-      <div className={clsx(styles.items, 'ml-8') } ref={dropTargerRef}>
+      <div className={clsx(styles.ingredients, 'ml-8') } ref={dropTargerRef}>
         {ingredients.length > 0 ? (
           <ConstructorIngredients ingredients={ingredients}/>
         ) : (
