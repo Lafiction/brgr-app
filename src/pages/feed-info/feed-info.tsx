@@ -9,7 +9,7 @@ import styles from './feed-info.module.css';
 
 export function FeedInfoPage() {
   const dispatch = useAppDispatch();
-  const details = useAppSelector(store => store.ws.messages);
+  const details = useAppSelector(store => store.ws.orders);
 
   useEffect(() => {
     dispatch(wsConnectionStart('/all'));

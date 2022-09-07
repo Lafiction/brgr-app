@@ -7,15 +7,13 @@ import type { TGetUserActions } from '../actions/get-user';
 import type { TRegistrationForm } from '../../utils/types';
 
 type TUserState = {
-  user: null;
   form: TRegistrationForm;
   isUser: boolean;
-  getUserRequest: boolean;
-  getUserFailed: boolean;
+  getUserRequest?: boolean;
+  getUserFailed?: boolean;
 };
 
-const initialState: TUserState = {
-  user: null,
+export const initialState: TUserState = {
   form: {
     email: '',
     name: '',

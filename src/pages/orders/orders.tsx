@@ -27,7 +27,7 @@ export const OrdersPage = () => {
   const location = useLocation<TLocationState>();
   const history = useHistory();
   const isUser = useAppSelector(store => store.user.isUser);
-  const data = useAppSelector(store => store.ws.messages);
+  const data = useAppSelector(store => store.ws.orders);
   const showDetails = useAppSelector(store => store.ingredientDetails.showDetails);
 
   function handleOpenModal(data: TOrders) {

@@ -15,7 +15,7 @@ type TLoginState = {
   isAuth: boolean;
 };
 
-const initialState: TLoginState = {
+export  const initialState: TLoginState = {
   form: { email: '', password: '' },
   authRequest: false,
   authFailed: false,

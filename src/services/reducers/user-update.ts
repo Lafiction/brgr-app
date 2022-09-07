@@ -9,12 +9,12 @@ import type { TRegistrationForm } from '../../utils/types';
 
 type TUpdateUserState = {
   form: TRegistrationForm;
-  getUserRequest: boolean;
-  getUserFailed: boolean;
-  isUpdated: boolean;
+  getUserRequest?: boolean;
+  getUserFailed?: boolean;
+  isUpdated?: boolean;
 };
 
-const initialState: TUpdateUserState = {
+export const initialState: TUpdateUserState = {
   form: {
     email: '',
     name: '',

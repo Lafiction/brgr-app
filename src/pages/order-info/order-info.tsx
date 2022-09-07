@@ -11,7 +11,7 @@ import styles from './order-info.module.css';
 
 export function OrderInfoPage() {
   const dispatch = useAppDispatch();
-  const data = useAppSelector(store => store.ws.messages);
+  const data = useAppSelector(store => store.ws.orders);
   
   useEffect(() => {
     dispatch(getUser());

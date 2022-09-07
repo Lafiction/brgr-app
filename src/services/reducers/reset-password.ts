@@ -16,7 +16,7 @@ type TResetPasswordState = {
   resetPasswordFailed: boolean;
 };
 
-const initialState: TResetPasswordState = {
+export const initialState: TResetPasswordState = {
   form: {
     password: "",
     token: "",
